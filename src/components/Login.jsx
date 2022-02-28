@@ -1,28 +1,102 @@
-import React from 'react';
+import React, { useCallback, useRef, useState, useEffect, createContext, useReducer } from 'react';
 import GoogleLogin from 'react-google-login';
+// import GithubIcon from "mdi-react/GithubIcon";
+import {
+  LoginSocialGoogle,
+  LoginSocialGithub
+} from 'reactjs-social-login'
+import {
+  GoogleLoginButton,
+  GithubLoginButton,
+} from 'react-social-login-buttons'
 import { useNavigate } from 'react-router-dom';
-import { FcGoogle } from 'react-icons/fc';
 import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
 import { client } from '../client';
 
+
+const REDIRECT_URI = 'http://localhost:3000/login'
+
+
 const Login = () => {
+
+  //login (https://www.npmjs.com/package/reactjs-social-login)
+  const [provider, setProvider] = useState('')
+
+  const googleRef = useRef(null)
+  const githubRef = useRef(null)
+
+
+  const onLogout = useCallback(() => {
+    switch (provider) {
+      case 'amazon':
+        amazonRef.current?.onLogout()
+        break
+      case 'facebook':
+        facebookRef.current?.onLogout()
+        break
+      case 'google':
+        googleRef.current?.onLogout()
+        break
+      case 'instagram':
+        instagramRef.current?.onLogout()
+        break
+      case 'microsoft':
+        microsoftRef.current?.onLogout()
+        break
+      case 'github':
+        githubRef.current?.onLogout()
+        break
+      case 'pinterest':
+        pinterestRef.current?.onLogout()
+        break
+      case 'twitter':
+        twitterRef.current?.onLogout()
+        break
+      case 'linkedin':
+        linkedinRef.current?.onLogout()
+        break
+      default:
+        break
+    }
+  }, [provider])
+
   const navigate = useNavigate();
-  const responseGoogle = (response) => {
-    localStorage.setItem('user', JSON.stringify(response.profileObj));
-    const { name, googleId, imageUrl } = response.profileObj;
+  const response = ({ provider, data }) => {
+    console.log(data)
+    setProvider(provider)
+    //正在响应数据
+    const avatar =
+      data?.avatar ||
+      data?.avatar_url ||
+      data?.picture?.data?.url ||
+      data?.profile_image_url_https ||
+      'https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png'
+    const name = data?.login || data?.name;
+    const node_id = data?.node_id || data?.id;
+    const email = data?.email || null;
+    const profileObj = {
+      node_id: node_id,
+      platform: provider,
+      name: name,
+      imageUrl: avatar,
+    }
+    console.log(profileObj)
+    localStorage.setItem('user', JSON.stringify(profileObj));
     const doc = {
-      _id:googleId,
+      _id: node_id,
       _type: 'user',
-      userID: googleId,
-      platform:'google',
+      email: email,
+      platform: provider,
       userName: name,
-      image: imageUrl,
+      image: avatar,
     };
+    //正在验证信息
     client.createIfNotExists(doc).then(() => {
       navigate('/', { replace: true });
     });
   };
+
 
 
   return (
@@ -44,24 +118,39 @@ const Login = () => {
           </div>
 
           <div className="shadow-2xl">
-            <GoogleLogin
-              clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
-              render={(renderProps) => (
-                <button
-                  type="button"
-                  className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
-                  onClick={renderProps.onClick}
-                  disabled={renderProps.disabled}
-                >
-                  <FcGoogle className="mr-4" /> Sign in with google
-                </button>
-              )}
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              cookiePolicy="single_host_origin"
-            />
-          </div>
 
+            <LoginSocialGithub
+              ref={githubRef}
+              client_id={process.env.REACT_APP_CLIENT_ID}
+              client_secret={process.env.REACT_APP_CLIENT_SECRET}
+              redirect_uri={process.env.REACT_APP_REDIRECT_URI}
+              onResolve={response}
+              onReject={(err) => {
+                console.log(err)
+                alert('获取信息失败，请重试')
+              }}
+            >
+              <GithubLoginButton />
+            </LoginSocialGithub>
+
+            <LoginSocialGoogle
+              ref={googleRef}
+              client_id={process.env.REACT_APP_GOOGLE_API_TOKEN || ''}
+              onResolve={response}
+              onReject={(err) => {
+                console.log(err)
+                alert('获取信息失败，请重试')
+              }}
+            >
+              <GoogleLoginButton />
+            </LoginSocialGoogle>
+
+        
+
+          </div>
+          <div>
+
+          </div>
         </div>
       </div>
     </div>

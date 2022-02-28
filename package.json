@@ -16,6 +16,8 @@
     "react-masonry-css": "^1.0.16",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "react-social-login-buttons": "^3.6.0",
+    "reactjs-social-login": "^2.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

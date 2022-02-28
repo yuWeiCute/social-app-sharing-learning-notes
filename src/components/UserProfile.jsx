@@ -1,7 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GoogleLogout } from 'react-google-login';
+import {
+  LoginSocialGoogle,
+
+  LoginSocialGithub,
+
+} from 'reactjs-social-login'
 
 import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../utils/data';
 import { client } from '../client';
@@ -16,10 +22,33 @@ const UserProfile = () => {
   const [pins, setPins] = useState();
   const [text, setText] = useState('Created');
   const [activeBtn, setActiveBtn] = useState('created');
+
+
+  // const googleRef = useRef(null)
+  // const githubRef = useRef(null)
+
   const navigate = useNavigate();
   const { userId } = useParams();
 
   const User = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
+
+
+  // const provider = User.platform
+  // console.log(provider)
+  // const onLogout = useCallback(() => {
+  //   switch (provider) {
+  //     case 'google':
+  //       googleRef.current?.onLogout()
+  //       break
+  //     case 'github':
+  //       githubRef.current?.onLogout()
+  //       break
+  //     default:
+  //       break
+  //   }
+  // }, [provider])
+
+
 
   useEffect(() => {
     const query = userQuery(userId);
@@ -72,23 +101,52 @@ const UserProfile = () => {
             {user.userName}
           </h1>
           <div className="absolute top-0 z-1 right-0 p-2">
-            {userId === User.googleId && (
-              <GoogleLogout
-                clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
-                render={(renderProps) => (
-                  <button
-                    type="button"
-                    className=" bg-white p-2 rounded-full cursor-pointer outline-none shadow-md"
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                  >
-                    <AiOutlineLogout color="red" fontSize={21} />
-                  </button>
-                )}
-                onLogoutSuccess={logout}
-                cookiePolicy="single_host_origin"
-              />
-            )}
+
+
+            <button
+              type="button"
+              className=" bg-white p-2 rounded-full cursor-pointer outline-none shadow-md"
+              // onClick={onLogout}
+            >
+              <AiOutlineLogout color="red" fontSize={21} />
+            </button>
+
+            {/* <LoginSocialGithub
+                ref={githubRef}
+                client_id={process.env.REACT_APP_CLIENT_ID}
+                client_secret={process.env.REACT_APP_CLIENT_SECRET}
+                redirect_uri={process.env.REACT_APP_REDIRECT_URI}
+                onResolve={ ({ provider, data }) => {
+                }}
+                onReject={(err) => {
+                  console.log(err)
+                  alert('获取信息失败，请重试')
+                }}
+              >
+
+              </LoginSocialGithub>
+
+              <LoginSocialGoogle
+                ref={googleRef}
+                client_id={process.env.REACT_APP_GOOGLE_API_TOKEN || ''}
+                onResolve={({ provider, data }) => {
+                } }
+                onReject={(err) => {
+                  console.log(err)
+                  alert('获取信息失败，请重试')
+                }}
+              >
+
+              </LoginSocialGoogle> */}
+
+
+
+
+
+
+
+
+
           </div>
         </div>
         <div className="text-center mb-7">
@@ -119,9 +177,9 @@ const UserProfile = () => {
         </div>
 
         {pins?.length === 0 && (
-        <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
-          No Pins Found!
-        </div>
+          <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
+            No Pins Found!
+          </div>
         )}
       </div>
 

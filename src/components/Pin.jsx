@@ -31,7 +31,7 @@ const Pin = ({ pin }) => {
   };
 
   // just return the item passed
-  let alreadySaved = pin?.save?.filter((item) => item?.postedBy?._id === user?.googleId);
+  let alreadySaved = pin?.save?.filter((item) => item?.postedBy?._id === user?.node_id);
 
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
@@ -48,10 +48,10 @@ const Pin = ({ pin }) => {
         .insert('after', 'save[-1]', [{
           //generate an unique id
           _key: uuidv4(),
-          userId: user?.googleId,
+          userId: user?.node_id,
           postedBy: {
             _type: 'postedBy',
-            _ref: user?.googleId,
+            _ref: user?.node_id,
           },
         }])
         //returning a promise
@@ -128,7 +128,7 @@ const Pin = ({ pin }) => {
                 </a>
               ) : undefined}
               {
-                postedBy?._id === user?.googleId && (
+                postedBy?._id === user?.node_id && (
                   <button
                     type="button"
                     onClick={(e) => {
