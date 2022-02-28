@@ -1,6 +1,4 @@
-import React, { useCallback, useRef, useState, useEffect, createContext, useReducer } from 'react';
-import GoogleLogin from 'react-google-login';
-// import GithubIcon from "mdi-react/GithubIcon";
+import React, { useRef, useState } from 'react';
 import {
   LoginSocialGoogle,
   LoginSocialGithub
@@ -14,57 +12,16 @@ import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
 import { client } from '../client';
 
-
-const REDIRECT_URI = 'http://localhost:3000/login'
-
-
 const Login = () => {
 
   //login (https://www.npmjs.com/package/reactjs-social-login)
-  const [provider, setProvider] = useState('')
 
   const googleRef = useRef(null)
   const githubRef = useRef(null)
 
-
-  const onLogout = useCallback(() => {
-    switch (provider) {
-      case 'amazon':
-        amazonRef.current?.onLogout()
-        break
-      case 'facebook':
-        facebookRef.current?.onLogout()
-        break
-      case 'google':
-        googleRef.current?.onLogout()
-        break
-      case 'instagram':
-        instagramRef.current?.onLogout()
-        break
-      case 'microsoft':
-        microsoftRef.current?.onLogout()
-        break
-      case 'github':
-        githubRef.current?.onLogout()
-        break
-      case 'pinterest':
-        pinterestRef.current?.onLogout()
-        break
-      case 'twitter':
-        twitterRef.current?.onLogout()
-        break
-      case 'linkedin':
-        linkedinRef.current?.onLogout()
-        break
-      default:
-        break
-    }
-  }, [provider])
-
   const navigate = useNavigate();
   const response = ({ provider, data }) => {
     console.log(data)
-    setProvider(provider)
     //正在响应数据
     const avatar =
       data?.avatar ||
@@ -97,10 +54,9 @@ const Login = () => {
     });
   };
 
-
-
   return (
     <div className="flex justify-start items-center flex-col h-screen">
+
       <div className=" relative w-full h-full">
         <video
           src={shareVideo}
@@ -144,8 +100,6 @@ const Login = () => {
             >
               <GoogleLoginButton />
             </LoginSocialGoogle>
-
-        
 
           </div>
           <div>

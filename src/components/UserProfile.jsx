@@ -1,14 +1,6 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GoogleLogout } from 'react-google-login';
-import {
-  LoginSocialGoogle,
-
-  LoginSocialGithub,
-
-} from 'reactjs-social-login'
-
 import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../utils/data';
 import { client } from '../client';
 import MasonryLayout from './MasonryLayout';
@@ -23,32 +15,8 @@ const UserProfile = () => {
   const [text, setText] = useState('Created');
   const [activeBtn, setActiveBtn] = useState('created');
 
-
-  // const googleRef = useRef(null)
-  // const githubRef = useRef(null)
-
   const navigate = useNavigate();
   const { userId } = useParams();
-
-  const User = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
-
-
-  // const provider = User.platform
-  // console.log(provider)
-  // const onLogout = useCallback(() => {
-  //   switch (provider) {
-  //     case 'google':
-  //       googleRef.current?.onLogout()
-  //       break
-  //     case 'github':
-  //       githubRef.current?.onLogout()
-  //       break
-  //     default:
-  //       break
-  //   }
-  // }, [provider])
-
-
 
   useEffect(() => {
     const query = userQuery(userId);
@@ -73,10 +41,9 @@ const UserProfile = () => {
     }
   }, [text, userId]);
 
-  const logout = () => {
+  const onLogout = () => {
     localStorage.clear();
-
-    navigate('/login');
+    navigate('/', { replace: true });
   };
 
   if (!user) return <Spinner message="Loading profile" />;
@@ -106,48 +73,14 @@ const UserProfile = () => {
             <button
               type="button"
               className=" bg-white p-2 rounded-full cursor-pointer outline-none shadow-md"
-              // onClick={onLogout}
+              onClick={onLogout}
             >
               <AiOutlineLogout color="red" fontSize={21} />
             </button>
-
-            {/* <LoginSocialGithub
-                ref={githubRef}
-                client_id={process.env.REACT_APP_CLIENT_ID}
-                client_secret={process.env.REACT_APP_CLIENT_SECRET}
-                redirect_uri={process.env.REACT_APP_REDIRECT_URI}
-                onResolve={ ({ provider, data }) => {
-                }}
-                onReject={(err) => {
-                  console.log(err)
-                  alert('获取信息失败，请重试')
-                }}
-              >
-
-              </LoginSocialGithub>
-
-              <LoginSocialGoogle
-                ref={googleRef}
-                client_id={process.env.REACT_APP_GOOGLE_API_TOKEN || ''}
-                onResolve={({ provider, data }) => {
-                } }
-                onReject={(err) => {
-                  console.log(err)
-                  alert('获取信息失败，请重试')
-                }}
-              >
-
-              </LoginSocialGoogle> */}
-
-
-
-
-
-
-
-
-
           </div>
+
+
+
         </div>
         <div className="text-center mb-7">
           <button
