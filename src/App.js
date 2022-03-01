@@ -26,7 +26,7 @@ import React, { Fragment, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import Login from './container/Login';
 import Home from './container/Home';
-import { UserProfile } from './components';
+import  UserProfile  from './container/UserProfile';
 
 const App = () => {
   return (

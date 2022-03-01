@@ -16,6 +16,7 @@ const Sidebar = ({ closeToggle, user }) => {
   return (
     <div className="flex flex-col justify-between bg-white h-full overflow-y-scroll min-w-210 hide-scrollbar">
       <div className="flex flex-col">
+        {/* 图标 */}
         <Link
           to="/"
           className="flex px-5 gap-2 my-6 pt-1 w-190 items-center"
@@ -23,20 +24,45 @@ const Sidebar = ({ closeToggle, user }) => {
         >
           <img src={logo} alt="logo" className="w-full" />
         </Link>
+
+
+
         <div className="flex flex-col gap-5">
 
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
-            onClick={handleCloseSidebar}
-          >
-            <RiHomeFill />
-            Home
-          </NavLink>
+
+
+          {/* home */}
+          <div className="mt-2 px-5 flex flex-row items-center">
+
+            {['home', 'work'].map((item) => (
+              <NavLink
+                to={`/${item == 'home' ? '' : item}`}
+                className={" text-base font-medium text-gray-500 hover:text-secColor"
+                  // ({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)
+                }
+                // onClick={handleCloseSidebar}
+                key={item}
+              >
+                {item}&nbsp;/&nbsp;
+              </NavLink>
+            ))}
+
+            {/* 用户图标或登录按钮 */}
+            {user ? <div>11</div> :
+              <Link to='/login' className="text-base font-medium text-gray-500 hover:text-secColor">
+                <p >Login</p>
+              </Link>
+            }
+          </div>
+
+
+
           <h3 className="mt-2 px-5 text-base 2xl:text-xl">Discover cateogries</h3>
+
+          {/* categories */}
           {categories.slice(0, categories.length - 1).map((category) => (
             <NavLink
-              to={`/category/${category.name}`}
+              to={`/work/category/${category.name}`}
               className={({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)}
               onClick={handleCloseSidebar}
               key={category.name}
@@ -45,6 +71,8 @@ const Sidebar = ({ closeToggle, user }) => {
               {category.name}
             </NavLink>
           ))}
+
+
         </div>
       </div>
       {user && (

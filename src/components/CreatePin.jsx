@@ -80,7 +80,7 @@ const CreatePin = ({ user }) => {
     <div className="flex flex-col justify-center items-center mt-5 lg:h-4/5">
       
       <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
-        <div className="bg-secondaryColor p-3 flex flex-0.7 w-full">
+        <div className="bg-lightGrayColor p-3 flex flex-0.7 w-full">
           <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
             {loading && (
               <Spinner />
@@ -185,7 +185,7 @@ const CreatePin = ({ user }) => {
               <button
                 type="button"
                 onClick={savePin}
-                className="bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none"
+                className="bg-secondaryColor text-white font-bold p-2 rounded-full w-28 outline-none"
               >
                 Save Pin
               </button>

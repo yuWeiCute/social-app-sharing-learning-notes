@@ -8,6 +8,9 @@ import MasonryLayout from './MasonryLayout';
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
 import Spinner from './Spinner';
 
+//blog body
+import BlockContent from "@sanity/block-content-to-react"
+
 const PinDetail = ({ user }) => {
   const { pinId } = useParams();
   const [pins, setPins] = useState();
@@ -21,7 +24,6 @@ const PinDetail = ({ user }) => {
     if (query) {
       client.fetch(`${query}`).then((data) => {
         setPinDetail(data[0]);
-        console.log(data);
         if (data[0]) {
           const query1 = pinDetailMorePinQuery(data[0]);
           client.fetch(query1).then((res) => {
@@ -33,6 +35,7 @@ const PinDetail = ({ user }) => {
   };
 
   useEffect(() => {
+    console.log(pinId);
     fetchPinDetails();
   }, [pinId]);
 
@@ -51,7 +54,7 @@ const PinDetail = ({ user }) => {
             setAddingComment(false);
           });
       }
-      else{
+      else {
         alert('请先登录')
       }
     } else {
@@ -77,12 +80,14 @@ const PinDetail = ({ user }) => {
             />
           </div>
           <div className="w-full p-5 flex-1 xl:min-w-620">
+
+            {/* download picture */}
             <div className="flex items-center justify-between">
               <div className="flex gap-2 items-center">
                 <a
                   href={`${pinDetail.image.asset.url}?dl=`}
                   download
-                  className="bg-secondaryColor p-2 text-xl rounded-full flex items-center justify-center text-dark opacity-75 hover:opacity-100"
+                  className="bg-lightGrayColor p-2 text-xl rounded-full flex items-center justify-center text-dark opacity-75 hover:opacity-100"
                 >
                   <MdDownloadForOffline />
                 </a>
@@ -117,6 +122,16 @@ const PinDetail = ({ user }) => {
                 </div>
               ))}
             </div>
+
+            {/* blog body */}
+            <div className="block__content">
+              <BlockContent
+                blocks={pinDetail.body}
+              />
+            </div>
+
+
+            {/* comment */}
             <div className="flex flex-wrap mt-6 gap-3">
               {user && <Link to={`/user-profile/${user._id}`}>
                 <img src={user.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
@@ -130,10 +145,20 @@ const PinDetail = ({ user }) => {
               />
               <button
                 type="button"
-                className="bg-red-500 text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
+                className="bg-secondaryColor text-white rounded-full px-6 py-2 font-semibold text-base outline-none"
                 onClick={addComment}
               >
                 {addingComment ? 'Doing...' : 'Done'}
+              </button>
+              
+              {/* Read more articles */}
+              <button>
+                <Link
+                  to="/work"
+                  className="py-2 px-6 rounded shadow text-white bg-black hover:bg-transparent border-2 border-black transition-all duration-500 hover:text-black font-bold"
+                >
+                  Read more articles
+                </Link>
               </button>
             </div>
           </div>

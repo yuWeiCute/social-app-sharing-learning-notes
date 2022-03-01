@@ -12,7 +12,7 @@ import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 import { client, urlFor } from '../client';
 
 const Pin = ({ pin }) => {
-  const [postHovered, setPostHovered] = useState(false);
+  const [postHovesecondaryColor, setPostHovesecondaryColor] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
   const [beSaved, setBeSaved] = useState(false);
 
@@ -67,14 +67,14 @@ const Pin = ({ pin }) => {
   return (
     <div className="m-2">
       <div
-        onMouseEnter={() => setPostHovered(true)}
-        onMouseLeave={() => setPostHovered(false)}
-        onClick={() => navigate(`/pin-detail/${_id}`)}
+        onMouseEnter={() => setPostHovesecondaryColor(true)}
+        onMouseLeave={() => setPostHovesecondaryColor(false)}
+        onClick={() => navigate(`/work/pin-detail/${_id}`)}
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         {image && (
           <img className="rounded-lg w-full" src={(urlFor(image).width(250).url())} alt="user-post" />)}
-        {postHovered && (
+        {postHovesecondaryColor && (
           <div
             className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
             style={{ height: '100%' }}
@@ -94,7 +94,7 @@ const Pin = ({ pin }) => {
 
 
               {(alreadySaved?.length !== 0) ||(beSaved==true)? (
-                <button type="button" className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
+                <button type="button" className="bg-secondaryColor opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
                   {pin?.save?.length}  Saved
                 </button>
               ) : (
@@ -104,7 +104,7 @@ const Pin = ({ pin }) => {
                     savePin(_id);
                   }}
                   type="button"
-                  className="bg-red-500 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                  className="bg-secondaryColor opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
                   {pin?.save?.length}   {savingPost ? 'Saving' : 'Save'}
                 </button>

@@ -41,13 +41,14 @@ module.exports = {
       textColor: {
         lightGray: '#F1EFEE',
         primary: '#FAFAFA',
-        secColor: '#efefef',
+        secColor: '#313bac',
         navColor: '#BEBEBE',
       },
       backgroundColor: {
         mainColor: '#FBF8F9',
-        secondaryColor: '#F0F0F0',
+        secondaryColor: '#313bac',
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
+        lightGrayColor: '#e4e4e4',
       },
       keyframes: {
         'slide-in': {
