@@ -38,18 +38,24 @@ const PinDetail = ({ user }) => {
 
   const addComment = () => {
     if (comment) {
-      setAddingComment(true);
-
-      client
-        .patch(pinId)
-        .setIfMissing({ comments: [] })
-        .insert('after', 'comments[-1]', [{ comment, _key: uuidv4(), postedBy: { _type: 'postedBy', _ref: user._id } }])
-        .commit()
-        .then(() => {
-          fetchPinDetails();
-          setComment('');
-          setAddingComment(false);
-        });
+      if (user) {
+        setAddingComment(true);
+        client
+          .patch(pinId)
+          .setIfMissing({ comments: [] })
+          .insert('after', 'comments[-1]', [{ comment, _key: uuidv4(), postedBy: { _type: 'postedBy', _ref: user._id } }])
+          .commit()
+          .then(() => {
+            fetchPinDetails();
+            setComment('');
+            setAddingComment(false);
+          });
+      }
+      else{
+        alert('请先登录')
+      }
+    } else {
+      alert('请输入内容')
     }
   };
 
@@ -112,9 +118,9 @@ const PinDetail = ({ user }) => {
               ))}
             </div>
             <div className="flex flex-wrap mt-6 gap-3">
-              <Link to={`/user-profile/${user._id}`}>
+              {user && <Link to={`/user-profile/${user._id}`}>
                 <img src={user.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
-              </Link>
+              </Link>}
               <input
                 className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"
                 type="text"
