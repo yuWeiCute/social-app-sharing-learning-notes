@@ -14,6 +14,14 @@ import { client } from '../client';
 
 const Login = () => {
 
+  // alert是否显示
+  const [answer, setAnswer] = useState(false);
+  const [verification, setVerification] = useState(false);
+
+
+
+
+
   //login (https://www.npmjs.com/package/reactjs-social-login)
 
   const googleRef = useRef(null)
@@ -23,6 +31,7 @@ const Login = () => {
   const response = ({ provider, data }) => {
     console.log(data)
     //正在响应数据
+    setAnswer(true)
     const avatar =
       data?.avatar ||
       data?.avatar_url ||
@@ -48,7 +57,9 @@ const Login = () => {
       userName: name,
       image: avatar,
     };
+    setAnswer(false)
     //正在验证信息
+    setVerification(true)
     client.createIfNotExists(doc).then(() => {
       navigate('/', { replace: true });
     });
@@ -56,49 +67,25 @@ const Login = () => {
 
   return (
     <div className="flex justify-start items-center flex-col h-screen">
+      {/* 提示框 */}
+      {answer && <div class=" z-50 absolute m-3 p-4 mb-4 inline-flex items-center text-base text-blue-700 bg-blue-100 rounded dark:bg-blue-200 dark:text-blue-800" role="alert">
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+        </svg>
+        正在响应数据.
+      </div>}
 
-
-
-<div class="bg-indigo-600">
-  <div class="max-w-7xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between flex-wrap">
-      <div class="w-0 flex-1 flex items-center">
-        <span class="flex p-2 rounded-lg bg-indigo-800">
-          {/* <!-- Heroicon name: outline/speakerphone --> */}
-          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-          </svg>
-        </span>
-        <p class="ml-3 font-medium text-white truncate">
-          <span class="md:hidden"> We announced a new product! </span>
-          <span class="hidden md:inline"> Big news! We're excited to announce a brand new product. </span>
-        </p>
-      </div>
-      <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
-        <a href="#" class="flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50"> Learn more </a>
-      </div>
-      <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
-        <button type="button" class="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2">
-          <span class="sr-only">Dismiss</span>
-          {/* <!-- Heroicon name: outline/x --> */}
-          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
+      {verification && <div class=" z-50 absolute m-3 p-4 mb-4 inline-flex items-center text-base text-blue-700 bg-blue-100 rounded dark:bg-blue-200 dark:text-blue-800" role="alert">
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-circle-right" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor" d="M256 8c137 0 248 111 248 248S393 504 256 504 8 393 8 256 119 8 256 8zm113.9 231L234.4 103.5c-9.4-9.4-24.6-9.4-33.9 0l-17 17c-9.4 9.4-9.4 24.6 0 33.9L285.1 256 183.5 357.6c-9.4 9.4-9.4 24.6 0 33.9l17 17c9.4 9.4 24.6 9.4 33.9 0L369.9 273c9.4-9.4 9.4-24.6 0-34z"></path>
+        </svg>
+        正在验证信息.
+      </div>}
 
 
       <div className=" relative w-full h-full">
+
+        {/* 背景 */}
         <video
           src={shareVideo}
           type="video/mp4"
@@ -109,7 +96,10 @@ const Login = () => {
           className="w-full h-full object-cover"
         />
 
+
+        {/* 登录 */}
         <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0    bg-blackOverlay">
+
           <div className="p-5">
             <img src={logo} width="130px" />
           </div>
