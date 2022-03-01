@@ -33,6 +33,15 @@ const Home = () => {
     scrollRef.current.scrollTo(0, 0);
   });
 
+
+  useEffect(() => {
+    const query = userQuery(userInfo?.node_id);
+
+    client.fetch(query).then((data) => {
+      setUser(data[0]);
+    });
+  }, []);
+  
   return (
 
 
@@ -47,7 +56,7 @@ const Home = () => {
       <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
         <Routes>
           <Route path="" element={<Myhome/>} />
-          <Route path="/work" element={<Pins user={user && user} />} >
+          <Route path="/work" element={<Pins searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>} >
             <Route path="" element={<Feed />} />
             <Route path="category/:categoryId" element={<Feed />} />
             <Route path="pin-detail/:pinId" element={<PinDetail user={user && user} />} />

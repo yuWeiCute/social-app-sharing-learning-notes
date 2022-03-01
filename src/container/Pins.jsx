@@ -3,13 +3,13 @@ import { Routes, Route,Outlet } from 'react-router-dom';
 
 import { Searchbar, Feed, PinDetail, CreatePin, Search } from '../components';
 
-const Pins = ({ user }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const Pins = ({ searchTerm, setSearchTerm }) => {
+  // const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <div className="px-2 md:px-5">
       <div className="bg-gray-50">
-        <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} user={user && user} />
+        <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
       <div className="h-full">
       <Outlet />

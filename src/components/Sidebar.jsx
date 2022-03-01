@@ -48,7 +48,7 @@ const Sidebar = ({ closeToggle, user }) => {
             ))}
 
             {/* 用户图标或登录按钮 */}
-            {user ? <div>11</div> :
+            {user ? <></> :
               <Link to='/login' className="text-base font-medium text-gray-500 hover:text-secColor">
                 <p >Login</p>
               </Link>

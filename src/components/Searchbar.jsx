@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoMdAdd, IoMdSearch } from 'react-icons/io';
 
-const Searchbar = ({ searchTerm, setSearchTerm, user }) => {
+const Searchbar = ({ searchTerm, setSearchTerm }) => {
   const navigate = useNavigate();
 
 
@@ -22,7 +22,7 @@ const Searchbar = ({ searchTerm, setSearchTerm, user }) => {
         <div className="flex gap-3 ">
 
 
-          <Link to="/create-pin" className="bg-black text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center">
+          <Link to="/work/create-pin" className="bg-black text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center">
             <IoMdAdd />
           </Link>
         </div>
