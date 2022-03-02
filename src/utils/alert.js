@@ -1,7 +1,7 @@
 
 export const alert = function(msg){
 	var maskBg = '#0000002b';						//蒙版展示色
-	var zIndex = 999999;							//修改弹出层z-index,应为最顶层,避免被覆盖
+	var zIndex = 990;							//修改弹出层z-index,应为最顶层,避免被覆盖
 	var desColor = '#1f0000'						//提示信息字体颜色
 	var buttonVal = '';							//确定按钮名称
 	var btnColor = 'grey';							//确定按钮字体颜色
