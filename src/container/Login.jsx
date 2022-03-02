@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import shareVideo from '../assets/share.mp4';
 import logo from '../assets/logowhite.png';
 import { client } from '../client';
+import {alert} from '../utils/alert';
 
 const Login = () => {
 

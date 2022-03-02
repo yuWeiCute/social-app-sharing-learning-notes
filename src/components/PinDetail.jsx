@@ -8,7 +8,7 @@ import { client, urlFor } from '../client';
 import MasonryLayout from './MasonryLayout';
 import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
 import Spinner from './Spinner';
-
+import {alert} from '../utils/alert';
 //blog body
 import BlockContent from "@sanity/block-content-to-react"
 

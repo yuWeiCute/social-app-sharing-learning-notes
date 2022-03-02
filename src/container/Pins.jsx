@@ -11,7 +11,7 @@ const Pins = ({ searchTerm, setSearchTerm }) => {
       <div className="bg-gray-50">
         <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
-      <div className="h-full">
+      <div className="md:m-3 h-full">
       <Outlet />
         {/* <Routes>
           <Route path="/" element={<Feed />} />

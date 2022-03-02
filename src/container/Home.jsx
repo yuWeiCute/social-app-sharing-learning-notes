@@ -8,7 +8,7 @@ import { client } from '../client';
 import logo from '../assets/logo.png';
 import Pins from './Pins';
 import Myhome from '../components/Home/Myhome';
-
+import {alert} from '../utils/alert';
 
 const Home = () => {
   //for search

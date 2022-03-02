@@ -10,6 +10,7 @@ import { AiTwotoneDelete, AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
 import { client, urlFor } from '../client';
+import {alert} from '../utils/alert';
 
 const Pin = ({ pin }) => {
 
