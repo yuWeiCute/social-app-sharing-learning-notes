@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../../../client';
-import { feedQuery, searchQuery } from '../../../../utils/data';
+import { feedQuery, categories } from '../../../../utils/data';
 import './Work.scss';
 
 const Work = () => {
@@ -12,7 +12,7 @@ const Work = () => {
   const [filterWork, setFilterWork] = useState([]);
   const [activeFilter, setActiveFilter] = useState('All');
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
-
+  
   useEffect(() => {
     client.fetch(feedQuery).then((data) => {
       setWorks(data);
@@ -21,6 +21,7 @@ const Work = () => {
   }, []);
 
   const handleWorkFilter = (item) => {
+    console.log(works);
     setActiveFilter(item);
     setAnimateCard([{ y: 100, opacity: 0 }]);
 
@@ -30,7 +31,7 @@ const Work = () => {
       if (item === 'All') {
         setFilterWork(works);
       } else {
-        setFilterWork(works.filter((work) => work.categories.includes(item)));
+        setFilterWork(works.filter((works) => works.categories.includes(item)));
       }
     }, 500);
   };
@@ -40,15 +41,22 @@ const Work = () => {
       <h2 className="head-text">My Creative <span>Portfolio</span> Section</h2>
 
       <div className="app__work-filter">
-        {['UI/UX', 'Web App', 'Mobile App', 'React JS', 'All'].map((item, index) => (
+        {categories.map((item, index) => (
           <div
             key={index}
-            onClick={() => handleWorkFilter(item)}
+            onClick={() => handleWorkFilter(item.name)}
             className={`app__work-filter-item app__flex p-text ${activeFilter === item ? 'item-active' : ''}`}
           >
-            {item}
+            {item.name}
           </div>
         ))}
+            <div
+            key={4}
+            onClick={() => handleWorkFilter('All')}
+            className="app__work-filter-item app__flex p-text"
+          >
+            All
+          </div>
       </div>
 
       <motion.div
