@@ -61,6 +61,7 @@ const Navbar = ({ user }) => {
             </div>
 
 
+            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer right-3 top-1/2" onClick={() => setToggleSidebar(true)} />
 
 
             {/* 侧边栏的显示 */}

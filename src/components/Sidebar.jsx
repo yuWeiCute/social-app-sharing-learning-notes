@@ -31,8 +31,8 @@ const Sidebar = ({ closeToggle, user }) => {
 
 
 
-          {/* home */}
-          <div className="mt-2 px-5 flex flex-row items-center">
+          {/* 主菜单 */}
+          <div className=" md:hidden mt-2 px-5 flex flex-row items-center">
 
             {['home', 'work'].map((item) => (
               <NavLink
