@@ -45,7 +45,10 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
     }
   },
       _id,
-      destination,
+      title,
+      description,
+      projectLink,
+      codeLink,
       categories[],
       postedBy->{
         _id,
@@ -62,31 +65,35 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
       },
     } `;
 
-    export const searchQuery = (searchTerm) => {
-      const query = `*[_type == "pin" && title match '${searchTerm}*' || categories[] match '${searchTerm}*' || about match '${searchTerm}*']{
-            image{
-              asset->{
-                url
-              }
-            },
-                _id,
-                destination,
-                postedBy->{
-                  _id,
-                  userName,
-                  image
-                },
-                save[]{
-                  _key,
-                  postedBy->{
-                    _id,
-                    userName,
-                    image
-                  },
-                },
-              }`;
-      return query;
-    };
+export const searchQuery = (searchTerm) => {
+  const query = `*[_type == "pin" && title match '${searchTerm}*' || categories[] match '${searchTerm}*' || about match '${searchTerm}*']{
+    image{
+      asset->{
+        url
+      }
+    },
+        _id,
+        title,
+        description,
+        projectLink,
+        codeLink,
+        categories[],
+        postedBy->{
+          _id,
+          userName,
+          image
+        },
+        save[]{
+          _key,
+          postedBy->{
+            _id,
+            userName,
+            image
+          },
+        },
+      } `;
+  return query;
+};
 
 
 export const pinDetailQuery = (pinId) => {
@@ -98,10 +105,9 @@ export const pinDetailQuery = (pinId) => {
     },
     _id,
     title, 
-    about,
-    category,
-    destination,
-    github,
+    description,
+    projectLink,
+    codeLink,
     publishedAt,
     body,
     postedBy->{

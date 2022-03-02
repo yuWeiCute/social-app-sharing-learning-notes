@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdDownloadForOffline } from 'react-icons/md';
+import { AiTwotoneDelete, AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,6 +13,7 @@ import Spinner from './Spinner';
 import BlockContent from "@sanity/block-content-to-react"
 
 const PinDetail = ({ user }) => {
+  console.log(user);
   const { pinId } = useParams();
   const [pins, setPins] = useState();
   const [pinDetail, setPinDetail] = useState();
@@ -23,6 +25,7 @@ const PinDetail = ({ user }) => {
 
     if (query) {
       client.fetch(`${query}`).then((data) => {
+        console.log(data);
         setPinDetail(data[0]);
         if (data[0]) {
           const query1 = pinDetailMorePinQuery(data[0]);
@@ -34,9 +37,30 @@ const PinDetail = ({ user }) => {
     }
   };
 
+  //https://www.npmjs.com/package/@sanity/client?source=post_page---------------------------
+  //api参考网站 
+  const deleteComment = (key) => {
+    
+    console.log(key);
+    const commentsToRemove = ['comments[0]', `comments[_key=='${key}']`]
+    client
+      .patch(`${pinDetail._id}`)
+      .unset(commentsToRemove)
+      .commit()
+      .then(() => {
+        console.log('已经删除，后台处理后更新');
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.error('Delete failed: ', err.message)
+      });
+  };
+
+
   useEffect(() => {
-    console.log(pinId);
+
     fetchPinDetails();
+    console.log(pinDetail);
   }, [pinId]);
 
   const addComment = () => {
@@ -53,6 +77,7 @@ const PinDetail = ({ user }) => {
             setComment('');
             setAddingComment(false);
           });
+        alert('评论成功，核验后显示')
       }
       else {
         alert('请先登录')
@@ -72,6 +97,8 @@ const PinDetail = ({ user }) => {
     <>
       {pinDetail && (
         <div className="flex xl:flex-row flex-col m-auto bg-white" style={{ maxWidth: '1500px', borderRadius: '32px' }}>
+
+          {/* 主图 */}
           <div className="flex justify-center items-center md:items-start flex-initial">
             <img
               className="rounded-t-3xl rounded-b-lg"
@@ -81,7 +108,7 @@ const PinDetail = ({ user }) => {
           </div>
           <div className="w-full p-5 flex-1 xl:min-w-620">
 
-            {/* download picture */}
+            {/* download picture +git  and view */}
             <div className="flex items-center justify-between">
               <div className="flex gap-2 items-center">
                 <a
@@ -91,21 +118,65 @@ const PinDetail = ({ user }) => {
                 >
                   <MdDownloadForOffline />
                 </a>
+                <a
+                  target="_blank"
+                  href={pinDetail.projectLink}
+                  onClick={(e) => {
+                    e.stopPropagation();
+
+                  }}
+                  className="bg-lightGrayColor p-2 text-xl rounded-full flex items-center justify-center text-dark opacity-75 hover:opacity-100"
+                  el="noreferrer"
+                >
+                  <AiFillEye />
+                </a>
+
+                {pinDetail.codeLink?.slice(8).length > 0 ? (
+                  <a
+
+                    href={pinDetail.codeLink}
+                    onClick={(e) => {
+                      e.stopPropagation();
+
+                    }}
+                    target="_blank"
+                    className="bg-lightGrayColor flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100"
+                    rel="noreferrer"
+                  >
+                    {' '}
+                    <AiFillGithub />
+                    {pinDetail.codeLink?.slice(8, 17)}...
+                  </a>
+                ) : undefined}
+
               </div>
-              <a href={pinDetail.destination} target="_blank" rel="noreferrer">
-                {pinDetail.destination?.slice(8)}
-              </a>
+
             </div>
+
+            {/* 标题和介绍 */}
             <div>
               <h1 className="text-4xl font-bold break-words mt-3">
                 {pinDetail.title}
               </h1>
-              <p className="mt-3">{pinDetail.about}</p>
+              <p className="mt-3">{pinDetail.description}</p>
             </div>
+
+
+            {/* blog body */}
+            <div className="block__content">
+              <BlockContent
+                blocks={pinDetail.body}
+              />
+            </div>
+
+
+            {/* 上传者 */}
             <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
               <img src={pinDetail?.postedBy.image} className="w-10 h-10 rounded-full" alt="user-profile" />
               <p className="font-bold">{pinDetail?.postedBy.userName}</p>
             </Link>
+
+            {/* 评论 */}
             <h2 className="mt-5 text-2xl">Comments</h2>
             <div className="max-h-370 overflow-y-auto">
               {pinDetail?.comments?.map((item) => (
@@ -119,16 +190,28 @@ const PinDetail = ({ user }) => {
                     <p className="font-bold">{item.postedBy?.userName}</p>
                     <p>{item.comment}</p>
                   </div>
+
+                  {
+                    item.postedBy?._id === user?._id && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          console.log(item._key);
+                          e.stopPropagation();
+                          deleteComment(item._key);
+
+                        }}
+                        className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
+                      >
+                        <AiTwotoneDelete />
+                      </button>
+                    )
+                  }
+
                 </div>
               ))}
             </div>
 
-            {/* blog body */}
-            <div className="block__content">
-              <BlockContent
-                blocks={pinDetail.body}
-              />
-            </div>
 
 
             {/* comment */}
@@ -150,7 +233,7 @@ const PinDetail = ({ user }) => {
               >
                 {addingComment ? 'Doing...' : 'Done'}
               </button>
-              
+
               {/* Read more articles */}
               <button>
                 <Link

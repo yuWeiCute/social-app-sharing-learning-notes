@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { urlFor, client } from '../../../../client';
+import { feedQuery, searchQuery } from '../../../../utils/data';
 import './Work.scss';
 
 const Work = () => {
@@ -13,9 +14,7 @@ const Work = () => {
   const [animateCard, setAnimateCard] = useState({ y: 0, opacity: 1 });
 
   useEffect(() => {
-    const query = '*[_type == "works"]';
-
-    client.fetch(query).then((data) => {
+    client.fetch(feedQuery).then((data) => {
       setWorks(data);
       setFilterWork(data);
     });
@@ -31,7 +30,7 @@ const Work = () => {
       if (item === 'All') {
         setFilterWork(works);
       } else {
-        setFilterWork(works.filter((work) => work.tags.includes(item)));
+        setFilterWork(works.filter((work) => work.categories.includes(item)));
       }
     }, 500);
   };
@@ -62,7 +61,7 @@ const Work = () => {
             <div
               className="app__work-img app__flex"
             >
-              <img src={urlFor(work.imgUrl)} alt={work.name} />
+              {work.image && <img src={urlFor(work.image).url()} alt={work.title} /> }
 
               <motion.div
                 whileHover={{ opacity: [0, 1] }}
@@ -94,12 +93,8 @@ const Work = () => {
             </div>
 
             <div className="app__work-content app__flex">
-              <h4 className="bold-text">{work.title}</h4>
-              <p className="p-text" style={{ marginTop: 10 }}>{work.description}</p>
-
-              <div className="app__work-tag app__flex">
-                <p className="p-text">{work.tags[0]}</p>
-              </div>
+              {work.title && <h4 className="bold-text">{work.title}</h4>}
+              {work.description && <p className="p-text" style={{ marginTop: 10 }}>{work.description}</p>}
             </div>
           </div>
         ))}
