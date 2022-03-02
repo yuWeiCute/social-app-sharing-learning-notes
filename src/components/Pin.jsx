@@ -37,7 +37,7 @@ const Pin = ({ pin }) => {
 
   //
   const savePin = (id) => {
-    if (alreadySaved?.length === 0) {
+    if (alreadySaved?.length === 0 && user) {
       setSavingPost(true);
 
       client
@@ -61,6 +61,8 @@ const Pin = ({ pin }) => {
           setSavingPost(false);
           setBeSaved(true)
         });
+    }else{
+      alert('请先登录')
     }
   };
 

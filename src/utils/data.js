@@ -46,6 +46,7 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
   },
       _id,
       destination,
+      categories[],
       postedBy->{
         _id,
         userName,
@@ -61,21 +62,21 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
       },
     } `;
 
-export const searchQuery = (searchTerm) => {
-  const query = `*[_type == "pin" && title match '${searchTerm}*' || category match '${searchTerm}*' || about match '${searchTerm}*']{
+    export const searchQuery = (searchTerm) => {
+      const query = `*[_type == "pin" && title match '${searchTerm}*' || categories[] match '${searchTerm}*' || about match '${searchTerm}*']{
             image{
               asset->{
                 url
               }
             },
-            _id,
+                _id,
                 destination,
                 postedBy->{
                   _id,
                   userName,
                   image
                 },
-            save[]{
+                save[]{
                   _key,
                   postedBy->{
                     _id,
@@ -84,8 +85,8 @@ export const searchQuery = (searchTerm) => {
                   },
                 },
               }`;
-  return query;
-};
+      return query;
+    };
 
 
 export const pinDetailQuery = (pinId) => {

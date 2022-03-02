@@ -14,7 +14,6 @@ const Feed = () => {
 
   const { categoryId } = useParams();
 
-
   useEffect(() => {
     if (categoryId) {
       setLoading(true);
@@ -23,6 +22,7 @@ const Feed = () => {
         setPins(data);
         setLoading(false);
       });
+
     } else {
       setLoading(true);
 
@@ -32,6 +32,8 @@ const Feed = () => {
       });
     }
   }, [categoryId]);
+
+
 
   const ideaName = categoryId || 'new';
   if (loading) {
