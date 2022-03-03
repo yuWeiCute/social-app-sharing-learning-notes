@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import MasonryLayout from './MasonryLayout';
-import { client } from '../client';
-import { feedQuery, searchQuery } from '../utils/data';
-import Spinner from './Spinner';
+import { client } from '../../../../client';
+import { feedQuery, searchQuery } from '../../../../shared/utils/data';
+import Spinner from '../../../../shared/components/Spinner';
 
 const Search = ({ searchTerm }) => {
   const [pins, setPins] = useState();

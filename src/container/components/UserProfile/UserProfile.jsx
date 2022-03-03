@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useParams, useNavigate } from 'react-router-dom';
-import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../utils/data';
-import { client } from '../client';
-import MasonryLayout from '../components/MasonryLayout';
-import Spinner from '../components/Spinner';
+import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../../../shared/utils/data';
+import { client } from '../../../client';
+import MasonryLayout from '../Posts/components/MasonryLayout';
+import Spinner from '../../../shared/components/Spinner';
 
 const activeBtnStyles = 'bg-secondaryColor text-white font-bold p-2 rounded-full w-20 outline-none';
 const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';

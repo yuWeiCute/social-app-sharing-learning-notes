@@ -9,8 +9,8 @@ import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete, AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
-import { client, urlFor } from '../client';
-import {alert} from '../utils/alert';
+import { client, urlFor } from '../../../../client';
+import {alert} from '../../../../shared/utils/alert';
 
 const Pin = ({ pin }) => {
 

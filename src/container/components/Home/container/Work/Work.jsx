@@ -3,8 +3,8 @@ import { AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { motion } from 'framer-motion';
 
 import { AppWrap, MotionWrap } from '../../wrapper';
-import { urlFor, client } from '../../../../client';
-import { feedQuery, categories } from '../../../../utils/data';
+import { urlFor, client } from '../../../../../client';
+import { feedQuery, categories } from '../../../../../shared/utils/data';
 import './Work.scss';
 
 const Work = () => {

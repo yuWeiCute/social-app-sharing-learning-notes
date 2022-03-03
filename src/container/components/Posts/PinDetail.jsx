@@ -4,11 +4,11 @@ import { AiTwotoneDelete, AiFillEye, AiFillGithub } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import { client, urlFor } from '../client';
-import MasonryLayout from './MasonryLayout';
-import { pinDetailMorePinQuery, pinDetailQuery } from '../utils/data';
-import Spinner from './Spinner';
-import {alert} from '../utils/alert';
+import { client, urlFor } from '../../../client';
+import {MasonryLayout} from './';
+import { pinDetailMorePinQuery, pinDetailQuery } from '../../../shared/utils/data';
+import Spinner from '../../../shared/components/Spinner';
+import {alert} from '../../../shared/utils/alert';
 //blog body
 import BlockContent from "@sanity/block-content-to-react"
 

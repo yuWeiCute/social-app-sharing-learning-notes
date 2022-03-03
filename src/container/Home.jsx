@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { HiMenu } from 'react-icons/hi';
-import { AiFillCloseCircle } from 'react-icons/ai';
+// import { HiMenu } from 'react-icons/hi';
+// import { AiFillCloseCircle } from 'react-icons/ai';
 import { NavLink, Link, Route, Routes, useParams } from 'react-router-dom';
-import { Searchbar, Sidebar, UserProfile, Search, Feed, PinDetail, CreatePin, Navbar } from '../components';
-import { userQuery } from '../utils/data';
+import { Searchbar, Sidebar, Navbar } from './components/Navigation';
+import {  Search, Feed, PinDetail, CreatePin, } from './components/Posts';
+// import { UserProfile} from './components/UserProfile';
+import { userQuery } from '../shared/utils/data';
 import { client } from '../client';
-import logo from '../assets/logo.png';
-import Pins from './Pins';
-import Myhome from '../components/Home/Myhome';
-import {alert} from '../utils/alert';
+// import logo from '../assets/logo.png';
+import Pins from './components/Posts/Pins';
+import Myhome from './components/Home/Myhome';
+// import {alert} from '../shared/utils/alert';
 
 const Home = () => {
   //for search

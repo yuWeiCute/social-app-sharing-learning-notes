@@ -8,10 +8,10 @@ import {
   GithubLoginButton,
 } from 'react-social-login-buttons'
 import { useNavigate } from 'react-router-dom';
-import shareVideo from '../assets/share.mp4';
-import logo from '../assets/logowhite.png';
-import { client } from '../client';
-import {alert} from '../utils/alert';
+import shareVideo from '../../shared/assets/share.mp4';
+import logo from '../../shared/assets/logowhite.png';
+import { client } from '../../client';
+import {alert} from '../../shared/utils/alert';
 
 const Login = () => {
 

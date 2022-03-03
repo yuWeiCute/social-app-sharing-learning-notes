@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { HiMenu } from 'react-icons/hi';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { NavLink, Link } from 'react-router-dom';
-import { Searchbar, Sidebar, UserProfile, Search, Feed, PinDetail, CreatePin } from '../components';
+import { Sidebar } from './';
 
-import logo from '../assets/logo.png';
+import logo from '../../../shared/assets/logo.png';
 
 
 const Navbar = ({ user }) => {
@@ -60,8 +60,8 @@ const Navbar = ({ user }) => {
 
             </div>
 
-
-            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer right-3 top-1/2" onClick={() => setToggleSidebar(true)} />
+{/* 悬浮固定图标 */}
+            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer left-0 top-1/2" onClick={() => setToggleSidebar(true)} />
 
 
             {/* 侧边栏的显示 */}

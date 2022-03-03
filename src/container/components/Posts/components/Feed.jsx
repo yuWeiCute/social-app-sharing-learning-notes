@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 //with this you can find which category been looking at
 import { useParams } from 'react-router-dom';
 
-import { client } from '../client';
-import { feedQuery, searchQuery } from '../utils/data';
+import { client } from '../../../../client';
+import { feedQuery, searchQuery } from '../../../../shared/utils/data';
 import MasonryLayout from './MasonryLayout';
-import Spinner from './Spinner';
+import Spinner from '../../../../shared/components/Spinner';
 
 const Feed = () => {
   const [loading, setLoading] = useState(false);

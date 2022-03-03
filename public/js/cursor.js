@@ -61,12 +61,6 @@ function mouseup(e) {
   gsap.to(cursorF, {scale: 1});
 
   endY = e.clientY || endY;
-  if (clicked && startY && Math.abs(startY - endY) >= 40) {
-    go(!Math.min(0, startY - endY)?1:-1);
-    clicked = false;
-    startY = null;
-    endY = null;
-  }
 }
 window.addEventListener('mousedown', mousedown, false);
 window.addEventListener('touchstart', mousedown, false);
