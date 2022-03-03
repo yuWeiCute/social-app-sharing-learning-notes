@@ -1,27 +1,17 @@
 import React, { useRef, useState } from 'react';
-import {
-  LoginSocialGoogle,
-  LoginSocialGithub
-} from 'reactjs-social-login'
-import {
-  GoogleLoginButton,
-  GithubLoginButton,
-} from 'react-social-login-buttons'
+import { LoginSocialGoogle, LoginSocialGithub } from 'reactjs-social-login'
+import { GoogleLoginButton, GithubLoginButton } from 'react-social-login-buttons'
 import { useNavigate } from 'react-router-dom';
 import shareVideo from '../../shared/assets/share.mp4';
 import logo from '../../shared/assets/logowhite.png';
 import { client } from '../../client';
-import {alert} from '../../shared/utils/alert';
+import { alert } from '../../shared/utils/alert';
 
 const Login = () => {
 
   // alert是否显示
   const [answer, setAnswer] = useState(false);
   const [verification, setVerification] = useState(false);
-
-
-
-
 
   //login (https://www.npmjs.com/package/reactjs-social-login)
 
@@ -83,9 +73,7 @@ const Login = () => {
         正在验证信息.
       </div>}
 
-
       <div className=" relative w-full h-full">
-
         {/* 背景 */}
         <video
           src={shareVideo}
@@ -97,12 +85,11 @@ const Login = () => {
           className="w-full h-full object-cover"
         />
 
-
         {/* 登录 */}
         <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0    bg-blackOverlay">
 
           <div className="p-5">
-            <img src={logo} width="130px" />
+            <img src={logo} width="130px" alt=""/>
           </div>
 
           <div className="shadow-2xl">

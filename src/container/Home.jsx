@@ -1,22 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
-// import { HiMenu } from 'react-icons/hi';
-// import { AiFillCloseCircle } from 'react-icons/ai';
-import { NavLink, Link, Route, Routes, useParams } from 'react-router-dom';
-import { Searchbar, Sidebar, Navbar } from './components/Navigation';
-import {  Search, Feed, PinDetail, CreatePin, } from './components/Posts';
-// import { UserProfile} from './components/UserProfile';
+import React, { useState, useRef, useEffect, Fragment, Suspense, lazy } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Navbar } from './components/Navigation';
+import { Search, Feed, PinDetail, CreatePin, } from './components/Posts';
 import { userQuery } from '../shared/utils/data';
 import { client } from '../client';
-// import logo from '../assets/logo.png';
-import Pins from './components/Posts/Pins';
-import Myhome from './components/Home/Myhome';
-// import {alert} from '../shared/utils/alert';
+
+ const Pins = lazy(() => import("./components/Posts/Pins"));
+ const Myhome = lazy(() => import("./components/Home/Myhome"));
 
 const Home = () => {
   //for search
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [toggleSidebar, setToggleSidebar] = useState(false);
   const [user, setUser] = useState();
 
   const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
@@ -35,15 +30,13 @@ const Home = () => {
     scrollRef.current.scrollTo(0, 0);
   });
 
-
   useEffect(() => {
     const query = userQuery(userInfo?.node_id);
-
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
   }, []);
-  
+
   return (
 
 
@@ -51,21 +44,20 @@ const Home = () => {
 
       <Navbar user={user && user} />
 
-
-
-
       {/* 等于work的时候显示 */}
       <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
+      <Suspense fallback={<Fragment />}> 
         <Routes>
-          <Route path="" element={<Myhome/>} />
-          <Route path="/work" element={<Pins searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>} >
+          <Route path="" element={<Myhome />} />
+          <Route path="/work" element={<Pins searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} >
             <Route path="" element={<Feed />} />
             <Route path="category/:categoryId" element={<Feed />} />
-            <Route path="pin-detail/:pinId" element={<PinDetail user={user && user} />} />
-            <Route path="create-pin" element={<CreatePin user={user && user} />} />
+            <Route path="post-detail/:postId" element={<PinDetail user={user && user} />} />
+            <Route path="create-post" element={<CreatePin user={user && user} />} />
             <Route path="search" element={<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} />
           </Route>
         </Routes>
+        </Suspense>
       </div>
 
     </div>

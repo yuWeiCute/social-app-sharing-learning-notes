@@ -6,11 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { MdDownloadForOffline } from 'react-icons/md';
-import { AiTwotoneDelete, AiFillEye, AiFillGithub } from 'react-icons/ai';
+import { AiTwotoneDelete, AiFillEye } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
 import { client, urlFor } from '../../../../client';
-import {alert} from '../../../../shared/utils/alert';
+import { alert } from '../../../../shared/utils/alert';
 
 const Pin = ({ pin }) => {
 
@@ -37,7 +37,6 @@ const Pin = ({ pin }) => {
 
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
-  //
   const savePin = (id) => {
 
     if (alreadySaved?.length === 0 && user) {
@@ -60,7 +59,6 @@ const Pin = ({ pin }) => {
         //returning a promise
         .commit()
         .then(() => {
-          // window.location.reload();
           setSavingPost(false);
           setBeSaved(true)
         });
@@ -74,7 +72,7 @@ const Pin = ({ pin }) => {
       <div
         onMouseEnter={() => setPostHovesecondaryColor(true)}
         onMouseLeave={() => setPostHovesecondaryColor(false)}
-        onClick={() => navigate(`/work/pin-detail/${_id}`)}
+        onClick={() => navigate(`/work/post-detail/${_id}`)}
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         {image && (
@@ -85,7 +83,6 @@ const Pin = ({ pin }) => {
             style={{ height: '100%' }}
           >
             <div className="flex items-center justify-between">
-
 
               {/* view and git按钮 */}
               <div className="flex gap-2">
@@ -98,15 +95,10 @@ const Pin = ({ pin }) => {
                   className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
                 ><MdDownloadForOffline />
                 </a>
-
-
               </div>
 
-
-
-
               {/* 保存按钮按钮 */}
-              {(alreadySaved?.length !== 0) || (beSaved == true) ? (
+              {(alreadySaved?.length !== 0) || (beSaved === true) ? (
                 <button type="button" className="bg-secondaryColor opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
                   {pin?.save?.length}  Saved
                 </button>
@@ -123,62 +115,53 @@ const Pin = ({ pin }) => {
                 </button>
               )}
 
-
-
-
             </div>
 
             {/* git  and view*/}
             <div className=" flex  items-center gap-2 w-full">
 
               <a
-target="_blank"
-                href={projectLink} 
+                target="_blank"
+                rel="noreferrer"
+                href={projectLink}
                 onClick={(e) => {
                   e.stopPropagation();
-
                 }}
                 className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
-              el="noreferrer"
+                el="noreferrer"
               >
                 <AiFillEye />
               </a>
 
               {codeLink?.slice(8).length > 0 ? (
                 <a
-                
                   href={codeLink}
                   onClick={(e) => {
                     e.stopPropagation();
-
                   }}
                   target="_blank"
                   className="bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-100 hover:shadow-md"
                   rel="noreferrer"
                 >
                   {' '}
-                  <AiFillGithub />
+                  <BsFillArrowUpRightCircleFill />
                   {codeLink?.slice(8, 17)}...
                 </a>
               ) : undefined}
 
-
-
-
               {/* 删除按钮 */}
-              {
-                postedBy?._id === user?.node_id && (
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deletePin(_id);
-                    }}
-                    className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
-                  >
-                    <AiTwotoneDelete />
-                  </button>
-                )
+              {postedBy?._id === user?.node_id && (
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deletePin(_id);
+                  }}
+                  className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
+                >
+                  <AiTwotoneDelete />
+                </button>
+              )
               }
             </div>
           </div>
@@ -188,7 +171,6 @@ target="_blank"
 
       {/* 单元的详细 */}
       <Link to={`/user-profile/${postedBy?._id}`} className=" gap-2 mt-2 ">
-
         <p className="font-semibold capitalize">{title}</p>
         <p className="capitalize">{description}</p>
       </Link>
