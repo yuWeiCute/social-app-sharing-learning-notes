@@ -7,7 +7,7 @@ import { categories } from '../../../shared/utils/data';
 import { client } from '../../../client';
 import Spinner from '../../../shared/components/Spinner';
 
-const CreatePin = ({ user }) => {
+const CreatePost = ({ user }) => {
   const [title, setTitle] = useState('');
   const [about, setAbout] = useState('');
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ const CreatePin = ({ user }) => {
     }
   };
 
-  const savePin = () => {
+  const savePost = () => {
     if (title && about && destination && imageAsset?._id && category) {
       const doc = {
         _type: 'pin',
@@ -153,7 +153,7 @@ const CreatePin = ({ user }) => {
             type="text"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            placeholder="Tell everyone what your Pin is about"
+            placeholder="Tell everyone what your Post is about"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
           <input
@@ -166,7 +166,7 @@ const CreatePin = ({ user }) => {
 
           <div className="flex flex-col">
             <div>
-              <p className="mb-2 font-semibold text:lg sm:text-xl">Choose Pin Category</p>
+              <p className="mb-2 font-semibold text:lg sm:text-xl">Choose Post Category</p>
               <select
                 onChange={(e) => {
                   setCategory(e.target.value);
@@ -184,10 +184,10 @@ const CreatePin = ({ user }) => {
             <div className="flex justify-end items-end mt-5">
               <button
                 type="button"
-                onClick={savePin}
+                onClick={savePost}
                 className="bg-secondaryColor text-white font-bold p-2 rounded-full w-28 outline-none"
               >
-                Save Pin
+                Save Post
               </button>
             </div>
           </div>
@@ -200,4 +200,4 @@ const CreatePin = ({ user }) => {
   );
 };
 
-export default CreatePin;
+export default CreatePost;

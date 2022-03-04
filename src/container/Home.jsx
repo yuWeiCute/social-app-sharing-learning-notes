@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect, Fragment, Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Navbar } from './components/Navigation';
-import { Search, Feed, PinDetail, CreatePin, } from './components/Posts';
+import { Search, Feed, PostDetail, CreatePost, } from './components/Posts';
 import { userQuery } from '../shared/utils/data';
 import { client } from '../client';
 
- const Pins = lazy(() => import("./components/Posts/Pins"));
+ const Posts = lazy(() => import("./components/Posts/Posts"));
  const Myhome = lazy(() => import("./components/Home/Myhome"));
 
 const Home = () => {
@@ -49,11 +49,11 @@ const Home = () => {
       <Suspense fallback={<Fragment />}> 
         <Routes>
           <Route path="" element={<Myhome />} />
-          <Route path="/work" element={<Pins searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} >
+          <Route path="/work" element={<Posts searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} >
             <Route path="" element={<Feed />} />
             <Route path="category/:categoryId" element={<Feed />} />
-            <Route path="post-detail/:postId" element={<PinDetail user={user && user} />} />
-            <Route path="create-post" element={<CreatePin user={user && user} />} />
+            <Route path="post-detail/:pinId" element={<PostDetail user={user && user} />} />
+            <Route path="create-post" element={<CreatePost user={user && user} />} />
             <Route path="search" element={<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} />
           </Route>
         </Routes>

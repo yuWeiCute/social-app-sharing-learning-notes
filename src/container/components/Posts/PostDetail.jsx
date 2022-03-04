@@ -6,30 +6,30 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { client, urlFor } from '../../../client';
 import { MasonryLayout } from './';
-import { pinDetailMorePinQuery, pinDetailQuery } from '../../../shared/utils/data';
+import { pinDetailMorePostQuery, pinDetailQuery } from '../../../shared/utils/data';
 import Spinner from '../../../shared/components/Spinner';
-import { alert } from '../../../shared/utils/alert';
+// import { alert } from '../../../shared/utils/alert';
 //blog body
 import BlockContent from "@sanity/block-content-to-react"
 
-const PinDetail = ({ user }) => {
+const PostDetail = ({ user }) => {
   console.log(user);
   const { pinId } = useParams();
-  const [pins, setPins] = useState();
-  const [pinDetail, setPinDetail] = useState();
+  const [pins, setPosts] = useState();
+  const [pinDetail, setPostDetail] = useState();
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
 
-  const fetchPinDetails = () => {
+  const fetchPostDetails = () => {
     const query = pinDetailQuery(pinId);
     if (query) {
       client.fetch(`${query}`).then((data) => {
         console.log(data);
-        setPinDetail(data[0]);
+        setPostDetail(data[0]);
         if (data[0]) {
-          const query1 = pinDetailMorePinQuery(data[0]);
+          const query1 = pinDetailMorePostQuery(data[0]);
           client.fetch(query1).then((res) => {
-            setPins(res);
+            setPosts(res);
           });
         }
       });
@@ -55,7 +55,7 @@ const PinDetail = ({ user }) => {
 
 
   useEffect(() => {
-    fetchPinDetails();
+    fetchPostDetails();
   }, [pinId]);
 
   const addComment = () => {
@@ -68,7 +68,7 @@ const PinDetail = ({ user }) => {
           .insert('after', 'comments[-1]', [{ comment, _key: uuidv4(), postedBy: { _type: 'postedBy', _ref: user._id } }])
           .commit()
           .then(() => {
-            fetchPinDetails();
+            fetchPostDetails();
             setComment('');
             setAddingComment(false);
           });
@@ -241,4 +241,4 @@ const PinDetail = ({ user }) => {
   );
 };
 
-export default PinDetail;
+export default PostDetail;

@@ -1,5 +1,5 @@
 
-export const alert = function(msg){
+window.alert = function(msg){
 	var maskBg = '#0000002b';						//蒙版展示色
 	var zIndex = 990;							//修改弹出层z-index,应为最顶层,避免被覆盖
 	var desColor = '#1f0000'						//提示信息字体颜色
@@ -15,6 +15,28 @@ export const alert = function(msg){
 		    			top : 0px;
 		    		}
 		    	}
+
+				@font-face {
+					font-family: 'DM Sans';
+					font-style: normal;
+					font-weight: 400;
+					font-display: swap;
+					src: url(https://fonts.gstatic.com/s/dmsans/v10/rP2Hp2ywxg089UriOZQ.ttf) format('truetype');
+				  }
+				  @font-face {
+					font-family: 'DM Sans';
+					font-style: normal;
+					font-weight: 500;
+					font-display: swap;
+					src: url(https://fonts.gstatic.com/s/dmsans/v10/rP2Cp2ywxg089UriAWCrOB8.ttf) format('truetype');
+				  }
+				  @font-face {
+					font-family: 'DM Sans';
+					font-style: normal;
+					font-weight: 700;
+					font-display: swap;
+					src: url(https://fonts.gstatic.com/s/dmsans/v10/rP2Cp2ywxg089UriASitOB8.ttf) format('truetype');
+				  }
 			
 				.alertMask{
 					
@@ -52,6 +74,7 @@ export const alert = function(msg){
 					padding: 8px 10px;
 					text-align: center;
 					letter-spacing: 1px;
+					font-family: 'DM Sans', sans-serif;
 					font-size: 14px;
 					color: `+desColor+`;
 					text-overflow:ellipsis;
@@ -124,14 +147,15 @@ export const alert = function(msg){
 	//关闭当前alert弹窗
 	function close(){
 		body.removeChild(alertMask);
-		// maskStyle = head.getElementsByClassName('mask-style')[0];
-		// head.removeChild(maskStyle);	//移除生成的css样式
+		maskStyle = head.getElementsByClassName('mask-style')[0];
+		head.removeChild(maskStyle);	//移除生成的css样式
 	}
-	const timer = (function(){close()},6000);
+	const timer = (function(){close()},4000);
 	function alertBtnClick(){
 		close()
 		clearTimeout(timer)
 	}
 	alertConfirmBtn.addEventListener("click", alertBtnClick);
-	
+
+
 }

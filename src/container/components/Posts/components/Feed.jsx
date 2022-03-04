@@ -10,7 +10,7 @@ import Spinner from '../../../../shared/components/Spinner';
 const Feed = () => {
   const [loading, setLoading] = useState(false);
 
-  const [pins, setPins] = useState();
+  const [pins, setPosts] = useState();
 
   const { categoryId } = useParams();
 
@@ -19,7 +19,7 @@ const Feed = () => {
       setLoading(true);
       const query = searchQuery(categoryId);
       client.fetch(query).then((data) => {
-        setPins(data);
+        setPosts(data);
         setLoading(false);
       });
 
@@ -27,7 +27,7 @@ const Feed = () => {
       setLoading(true);
 
       client.fetch(feedQuery).then((data) => {
-        setPins(data);
+        setPosts(data);
         setLoading(false);
       });
     }

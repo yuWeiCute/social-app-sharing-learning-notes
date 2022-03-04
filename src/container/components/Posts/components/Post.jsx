@@ -10,9 +10,9 @@ import { AiTwotoneDelete, AiFillEye } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
 import { client, urlFor } from '../../../../client';
-import { alert } from '../../../../shared/utils/alert';
+// import { alert } from '../../../../shared/utils/alert';
 
-const Pin = ({ pin }) => {
+const Post = ({ pin }) => {
 
   const [postHovesecondaryColor, setPostHovesecondaryColor] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
@@ -24,7 +24,7 @@ const Pin = ({ pin }) => {
 
   const user = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
 
-  const deletePin = (id) => {
+  const deletePost = (id) => {
     client
       .delete(id)
       .then(() => {
@@ -37,8 +37,7 @@ const Pin = ({ pin }) => {
 
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
-  const savePin = (id) => {
-
+  const savePost = (id) => {
     if (alreadySaved?.length === 0 && user) {
       setSavingPost(true);
 
@@ -63,7 +62,7 @@ const Pin = ({ pin }) => {
           setBeSaved(true)
         });
     } else {
-      alert('请先登录')
+      alert('Please login first')
     }
   };
 
@@ -76,7 +75,7 @@ const Pin = ({ pin }) => {
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         {image && (
-          <img className="rounded-lg w-full" src={(urlFor(image).width(250).url())} alt="user-post" />)}
+          <img className="rounded-lg w-full " src={(urlFor(image).width(250).url())} alt="user-post" />)}
         {postHovesecondaryColor && (
           <div
             className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
@@ -106,7 +105,7 @@ const Pin = ({ pin }) => {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    savePin(_id);
+                    savePost(_id);
                   }}
                   type="button"
                   className="bg-secondaryColor opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
@@ -155,7 +154,7 @@ const Pin = ({ pin }) => {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    deletePin(_id);
+                    deletePost(_id);
                   }}
                   className="bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none"
                 >
@@ -178,4 +177,4 @@ const Pin = ({ pin }) => {
   );
 };
 
-export default Pin;
+export default Post;

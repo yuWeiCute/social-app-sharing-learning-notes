@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Searchbar } from '../Navigation';
 
-const Pins = ({ searchTerm, setSearchTerm }) => {
+const Posts = ({ searchTerm, setSearchTerm }) => {
 
   return (
     <div className="px-2 md:px-7">
@@ -16,4 +16,4 @@ const Pins = ({ searchTerm, setSearchTerm }) => {
   );
 };
 
-export default Pins;
+export default Posts;

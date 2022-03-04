@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useParams, useNavigate } from 'react-router-dom';
-import { userCreatedPinsQuery, userQuery, userSavedPinsQuery } from '../../../shared/utils/data';
+import { userCreatedPostsQuery, userQuery, userSavedPostsQuery } from '../../../shared/utils/data';
 import { client } from '../../../client';
 import MasonryLayout from '../Posts/components/MasonryLayout';
 import Spinner from '../../../shared/components/Spinner';
@@ -11,7 +11,7 @@ const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-ful
 
 const UserProfile = () => {
   const [user, setUser] = useState();
-  const [pins, setPins] = useState();
+  const [pins, setPosts] = useState();
   const [text, setText] = useState('Created');
   const [activeBtn, setActiveBtn] = useState('created');
 
@@ -27,16 +27,16 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (text === 'Created') {
-      const createdPinsQuery = userCreatedPinsQuery(userId);
+      const createdPostsQuery = userCreatedPostsQuery(userId);
 
-      client.fetch(createdPinsQuery).then((data) => {
-        setPins(data);
+      client.fetch(createdPostsQuery).then((data) => {
+        setPosts(data);
       });
     } else {
-      const savedPinsQuery = userSavedPinsQuery(userId);
+      const savedPostsQuery = userSavedPostsQuery(userId);
 
-      client.fetch(savedPinsQuery).then((data) => {
-        setPins(data);
+      client.fetch(savedPostsQuery).then((data) => {
+        setPosts(data);
       });
     }
   }, [text, userId]);
@@ -111,7 +111,7 @@ const UserProfile = () => {
 
         {pins?.length === 0 && (
           <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
-            No Pins Found!
+            No Posts Found!
           </div>
         )}
       </div>
