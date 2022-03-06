@@ -4,12 +4,21 @@ import { Navbar } from './components/Navigation';
 import { Search, Feed, PostDetail, CreatePost, } from './components/Posts';
 import { userQuery } from '../shared/utils/data';
 import { client } from '../client';
+import { useSelector, useDispatch } from "react-redux";
+// import { setHeadTitle } from '../../redux/actions'
+
+
 
  const Posts = lazy(() => import("./components/Posts/Posts"));
  const Myhome = lazy(() => import("./components/Home/Myhome"));
 
 const Home = () => {
+  
   //for search
+  const headTitle = useSelector(state => state.headTitle)
+  // const dispatch = useDispatch
+
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const [user, setUser] = useState();
@@ -18,7 +27,12 @@ const Home = () => {
 
   const scrollRef = useRef(null);
 
+//   store.subscribe(function() {
+//     document.title = headTitle
+// })
+
   useEffect(() => {
+    document.title = 'YUWEI - Inspiration & Notes From All Around Web'
     const query = userQuery(userInfo?.node_id);
 
     client.fetch(query).then((data) => {
@@ -30,12 +44,6 @@ const Home = () => {
     scrollRef.current.scrollTo(0, 0);
   });
 
-  useEffect(() => {
-    const query = userQuery(userInfo?.node_id);
-    client.fetch(query).then((data) => {
-      setUser(data[0]);
-    });
-  }, []);
 
   return (
 

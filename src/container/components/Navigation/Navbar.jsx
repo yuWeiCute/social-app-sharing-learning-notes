@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiMenu } from 'react-icons/hi';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { NavLink, Link } from 'react-router-dom';
 import { Sidebar } from './';
+
+// import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setHeadTitle } from '../../../redux/actions'
+import store from '../../../redux/store'
+
 
 import logo from '../../../shared/assets/logo.png';
 
 
 const Navbar = ({ user }) => {
 
+    const headTitle = useSelector(state => state.headTitle)
+    const dispatch = useDispatch
 
 
     const [toggleSidebar, setToggleSidebar] = useState(false);
+
 
 
     return (
@@ -40,6 +49,7 @@ const Navbar = ({ user }) => {
                             }
                             // onClick={handleCloseSidebar}
                             key={item}
+                            onClick={() => store.dispatch(setHeadTitle(item))} 
                         >
                             {item} &nbsp;&nbsp;  /
                         </NavLink>
@@ -60,8 +70,11 @@ const Navbar = ({ user }) => {
 
             </div>
 
-{/* 悬浮固定图标 */}
-            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer left-0 top-1/2" onClick={() => setToggleSidebar(true)} />
+            {/* 悬浮固定图标 */}
+            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer left-0 top-1/2" 
+            // onClick={() => setToggleSidebar(true)
+            onClick={() => store.dispatch(setHeadTitle('asdasd'))} 
+            />
 
 
             {/* 侧边栏的显示 */}
@@ -79,3 +92,6 @@ const Navbar = ({ user }) => {
 }
 
 export default Navbar
+/* connect(
+    (state) => ({ headTitle: state.headTitle })
+)() */

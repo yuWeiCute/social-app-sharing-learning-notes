@@ -17,11 +17,13 @@
     "react-lazyload": "^3.2.0",
     "react-loader-spinner": "^4.0.0",
     "react-masonry-css": "^1.0.16",
+    "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-social-login-buttons": "^3.6.0",
     "react-tooltip": "^4.2.21",
     "reactjs-social-login": "^2.0.1",
+    "redux": "^4.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
