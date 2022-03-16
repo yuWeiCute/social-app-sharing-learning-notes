@@ -150,8 +150,8 @@ window.alert = function (msg) {
 	//关闭当前alert弹窗
 	function close() {
 		body.removeChild(alertMask);
-		maskStyle = head.getElementsByClassName('mask-style')[0];
-		head.removeChild(maskStyle);	//移除生成的css样式
+		// maskStyle = head.getElementsByClassName('mask-style')[0];
+		// head.removeChild(maskStyle);	//移除生成的css样式
 		this.alertOnOff = false
 	}
 	const timer = setTimeout(

@@ -10,13 +10,14 @@ import { AiTwotoneDelete, AiFillEye } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 
 import { client, urlFor } from '../../../../client';
-// import { alert } from '../../../../shared/utils/alert';
+
 
 const Post = ({ pin }) => {
 
   const [postHovesecondaryColor, setPostHovesecondaryColor] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
   const [beSaved, setBeSaved] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -37,34 +38,48 @@ const Post = ({ pin }) => {
 
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
 
+  var inThrottle = false;
   const savePost = (id) => {
-    if (alreadySaved?.length === 0 && user) {
-      setSavingPost(true);
 
-      client
-        .patch(id)
-        //initialize the saving array
-        .setIfMissing({ save: [] })
-        //save[-1] meaning at end
-        .insert('after', 'save[-1]', [{
-          //generate an unique id
-          _key: uuidv4(),
-          userId: user?.node_id,
-          postedBy: {
-            _type: 'postedBy',
-            _ref: user?.node_id,
-          },
-        }])
-        //returning a promise
-        .commit()
-        .then(() => {
-          setSavingPost(false);
-          setBeSaved(true)
-        });
+    if (alreadySaved?.length === 0 && user) {
+      console.log(inThrottle);
+      if (!inThrottle) {
+        inThrottle = true;
+        //每秒最多发送一次请求
+        setTimeout(() => (inThrottle = false), 1000)
+        console.log('save');
+        setSavingPost(true);
+
+        client
+          .patch(id)
+          //initialize the saving array
+          .setIfMissing({ save: [] })
+          //save[-1] meaning at end
+          .insert('after', 'save[-1]', [{
+            //generate an unique id
+            _key: uuidv4(),
+            userId: user?.node_id,
+            postedBy: {
+              _type: 'postedBy',
+              _ref: user?.node_id,
+            },
+          }])
+          //returning a promise
+          .commit()
+          .then(() => {
+            setSavingPost(false);
+            setBeSaved(true)
+          });
+      } else {
+        alert('正在发送请求')
+      }
     } else {
       alert('Please login first')
     }
   };
+
+
+
 
   return (
     <div className="m-2">
@@ -96,7 +111,7 @@ const Post = ({ pin }) => {
                 </a>
               </div>
 
-              {/* 保存按钮按钮 */}
+              {/* save按钮按钮 */}
               {(alreadySaved?.length !== 0) || (beSaved === true) ? (
                 <button type="button" className="bg-secondaryColor opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none">
                   {pin?.save?.length}  Saved

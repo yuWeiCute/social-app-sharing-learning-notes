@@ -7,9 +7,9 @@ import store from './redux/store'
 const Login = lazy(() => import("./container/components/Login"));
 
 const App = () => {
-  store.subscribe(function() {
-    document.title = headTitle
-})
+//   store.subscribe(function() {
+//     document.title = headTitle
+// })
   // const isLogged =useSelector(state => state.isLogged)
   return (
     <Suspense fallback={<Fragment />}> 

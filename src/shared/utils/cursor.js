@@ -1,7 +1,10 @@
+import gsap from "gsap";
+
+
 
 
 function lerp(start, end, amount) {
-  return (1-amount)*start+amount*end
+  return (1 - amount) * start + amount * end
 }
 
 const cursor = document.createElement('div');
@@ -25,21 +28,21 @@ if ('ontouchstart' in window) {
   cursorF.style.display = 'none';
 }
 
-cursor.style.setProperty('--size', size+'px');
-cursorF.style.setProperty('--size', sizeF+'px');
+cursor.style.setProperty('--size', size + 'px');
+cursorF.style.setProperty('--size', sizeF + 'px');
 
-window.addEventListener('mousemove', function(e) {
+window.addEventListener('mousemove', function (e) {
   pageX = e.clientX;
   pageY = e.clientY;
-  cursor.style.left = e.clientX-size/2+'px';
-  cursor.style.top = e.clientY-size/2+'px';
+  cursor.style.left = e.clientX - size / 2 + 'px';
+  cursor.style.top = e.clientY - size / 2 + 'px';
 });
 
 function loop() {
   cursorX = lerp(cursorX, pageX, followSpeed);
   cursorY = lerp(cursorY, pageY, followSpeed);
-  cursorF.style.top = cursorY - sizeF/2 + 'px';
-  cursorF.style.left = cursorX - sizeF/2 + 'px';
+  cursorF.style.top = cursorY - sizeF / 2 + 'px';
+  cursorF.style.left = cursorX - sizeF / 2 + 'px';
   requestAnimationFrame(loop);
 }
 
@@ -50,21 +53,21 @@ let endY;
 let clicked = false;
 
 function mousedown(e) {
-  gsap.to(cursor, {scale: 4.5});
-  gsap.to(cursorF, {scale: .4});
+  gsap.to(cursor, { scale: 4.5 });
+  gsap.to(cursorF, { scale: .4 });
 
   clicked = true;
   startY = e.clientY || e.touches[0].clientY || e.targetTouches[0].clientY;
 }
 function mouseup(e) {
-  gsap.to(cursor, {scale: 1});
-  gsap.to(cursorF, {scale: 1});
+  gsap.to(cursor, { scale: 1 });
+  gsap.to(cursorF, { scale: 1 });
 
   endY = e.clientY || endY;
 }
 window.addEventListener('mousedown', mousedown, false);
 window.addEventListener('touchstart', mousedown, false);
-window.addEventListener('touchmove', function(e) {
+window.addEventListener('touchmove', function (e) {
   if (clicked) {
     endY = e.touches[0].clientY || e.targetTouches[0].clientY;
   }

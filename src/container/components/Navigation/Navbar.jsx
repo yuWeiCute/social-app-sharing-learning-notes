@@ -10,7 +10,7 @@ import { setHeadTitle } from '../../../redux/actions'
 import store from '../../../redux/store'
 
 
-import logo from '../../../shared/assets/logo.png';
+import logo from '../../../shared/assets/logo.webp';
 
 
 const Navbar = ({ user }) => {

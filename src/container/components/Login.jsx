@@ -3,7 +3,7 @@ import { LoginSocialGoogle, LoginSocialGithub } from 'reactjs-social-login'
 import { GoogleLoginButton, GithubLoginButton } from 'react-social-login-buttons'
 import { useNavigate } from 'react-router-dom';
 import shareVideo from '../../shared/assets/share.mp4';
-import logo from '../../shared/assets/logowhite.png';
+import logo from '../../shared/assets/logowhite.webp';
 import { client } from '../../client';
 
 const Login = () => {

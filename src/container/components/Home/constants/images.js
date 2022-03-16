@@ -20,9 +20,9 @@ import vue from '../assets/vue.png';
 
 
 
-import profile from '../assets/profile.png';
+import profile from '../assets/profile.webp';
 import circle from '../assets/circle.svg';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.webp';
 
 
 
