@@ -4,19 +4,11 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 import { NavLink, Link } from 'react-router-dom';
 import { Sidebar } from './';
 
-// import { connect } from "react-redux";
-import { useSelector, useDispatch } from "react-redux";
-import { setHeadTitle } from '../../../redux/actions'
-import store from '../../../redux/store'
-
 
 import logo from '../../../shared/assets/logo.webp';
 
 
 const Navbar = ({ user }) => {
-
-    const headTitle = useSelector(state => state.headTitle)
-    const dispatch = useDispatch
 
 
     const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -49,7 +41,6 @@ const Navbar = ({ user }) => {
                             }
                             // onClick={handleCloseSidebar}
                             key={item}
-                            onClick={() => store.dispatch(setHeadTitle(item))} 
                         >
                             {item} &nbsp;&nbsp;  /
                         </NavLink>
@@ -58,7 +49,12 @@ const Navbar = ({ user }) => {
 
                     {/* 用户图标或登录按钮 */}
                     {user ? <Link to={`user-profile/${user?._id}`}>
-                        <img src={user?.image} alt="user-pic" className=" w-8 h-8 rounded-full " />
+                        <img src={user?.image}
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
+                            } }
+                            alt="" className=" w-8 h-8 rounded-full " />
                     </Link> :
                         <Link to='/login' className="px-2 text-base font-medium text-gray-500 hover:text-secColor">
                             <p >Login</p>
@@ -71,9 +67,8 @@ const Navbar = ({ user }) => {
             </div>
 
             {/* 悬浮固定图标 */}
-            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer left-0 top-1/2" 
+            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer left-0 top-1/2"
             // onClick={() => setToggleSidebar(true)
-            onClick={() => store.dispatch(setHeadTitle('asdasd'))} 
             />
 
 

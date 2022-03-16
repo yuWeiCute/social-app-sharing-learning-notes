@@ -56,12 +56,16 @@ const UserProfile = () => {
             <img
               className=" w-full h-370 2xl:h-510 shadow-lg object-cover"
               src="https://source.unsplash.com/1600x900/?nature,photography,technology"
-              alt="user-pic"
+              alt=""
             />
             <img
               className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover"
               src={user.image}
-              alt="user-pic"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
+              }}
+              alt=""
             />
           </div>
           <h1 className="font-bold text-3xl text-center mt-3">

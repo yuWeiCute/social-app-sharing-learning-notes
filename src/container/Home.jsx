@@ -4,9 +4,6 @@ import { Navbar } from './components/Navigation';
 import { Search, Feed, PostDetail, CreatePost, } from './components/Posts';
 import { userQuery } from '../shared/utils/data';
 import { client } from '../client';
-import { useSelector, useDispatch } from "react-redux";
-// import { setHeadTitle } from '../../redux/actions'
-
 
 
  const Posts = lazy(() => import("./components/Posts/Posts"));
@@ -15,7 +12,6 @@ import { useSelector, useDispatch } from "react-redux";
 const Home = () => {
   
   //for search
-  const headTitle = useSelector(state => state.headTitle)
   // const dispatch = useDispatch
 
 
