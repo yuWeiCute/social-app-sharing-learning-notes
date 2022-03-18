@@ -71,7 +71,7 @@ const CreatePost = ({ user }) => {
         categories: [category],
       };
       client.create(doc).then(() => {
-        navigate('/');
+        navigate('/work');
       });
     } else {
       setFields(true);

@@ -79,7 +79,7 @@ const Post = ({ pin }) => {
 
 
   return (
-    <div className="m-3 mb-8">
+    <div className="m-3 mb-8 ">
       <div
         onMouseEnter={() => setPostHovesecondaryColor(true)}
         onMouseLeave={() => setPostHovesecondaryColor(false)}
@@ -87,7 +87,8 @@ const Post = ({ pin }) => {
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
         {/* {image && ( */}
-          <img className="rounded-lg w-full " src={(urlFor(image).width(380).url())} alt="" />
+          <img style={{ minHeight: '10rem'}}
+          className="rounded-lg w-full " src={(urlFor(image).width(480).url())} alt="" />
           {/* )} */}
         {postHovesecondaryColor && (
           <div
@@ -185,8 +186,8 @@ const Post = ({ pin }) => {
 
       {/* 单元的详细 */}
       <Link to={`/user-profile/${postedBy?._id}`} className=" gap-2 mt-2 ">
-        <p className="mt-2 text-xl font-bold capitalize">{title}</p>
-        <p className="text-lg text-darkGray capitalize">{description}</p>
+        <p className="mt-2 text-xl font-bold capitalize" >{title}</p>
+        <p className="text-lg text-darkGray capitalize" >{description}</p>
       </Link>
     </div>
   );
