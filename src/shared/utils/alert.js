@@ -79,7 +79,7 @@ window.alert = function (msg) {
 					text-align: center;
 					letter-spacing: 1px;
 					font-family: 'DM Sans', sans-serif;
-					font-size: 14px;
+					font-size: 16px;
 					color: `+ desColor + `;
 					text-overflow:ellipsis;
 					white-space: nowrap;

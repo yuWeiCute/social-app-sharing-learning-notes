@@ -5,6 +5,9 @@ import { userCreatedPostsQuery, userQuery, userSavedPostsQuery } from '../../../
 import { client } from '../../../client';
 import MasonryLayout from '../Posts/components/MasonryLayout';
 import Spinner from '../../../shared/components/Spinner';
+import ReactTooltip from 'react-tooltip';
+import logo from '../../../shared/assets/logowhite.webp';
+import { NavLink, Link } from 'react-router-dom';
 
 const activeBtnStyles = 'bg-secondaryColor text-white font-bold p-2 rounded-full w-20 outline-none';
 const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
@@ -59,7 +62,7 @@ const UserProfile = () => {
               alt=""
             />
             <img
-              className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover"
+              className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover bg-white"
               src={user.image}
               onError={(e) => {
                 e.target.onerror = null;
@@ -72,15 +75,20 @@ const UserProfile = () => {
             {user.userName}
           </h1>
           <div className="absolute top-0 z-1 right-0 p-2">
-
-
             <button
               type="button"
               className=" bg-white p-2 rounded-full cursor-pointer outline-none shadow-md"
               onClick={onLogout}
-            >
+            ><p data-tip="Logout" >
               <AiOutlineLogout color="red" fontSize={21} />
+              <ReactTooltip />
+            </p>
             </button>
+          </div>
+          <div className=" absolute top-0 z-1 left-0 p-2.5">
+          <Link to="/">
+                    <img src={logo} alt="logo" className="cursor-pointer w-36" />
+                </Link>
           </div>
 
 

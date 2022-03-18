@@ -23,8 +23,8 @@
 
 
  /*滚动条样式*/
-::-webkit-scrollbar {width:5px;height:5px;position:absolute}
-::-webkit-scrollbar-thumb {background-color:rgba(66, 103, 224, 0.2)}
+::-webkit-scrollbar {width:3px;height:5px;position:absolute}
+::-webkit-scrollbar-thumb {background-color:rgba(53, 82, 212, 0.5)}
 ::-webkit-scrollbar-track {background-color:rgba(255, 255, 255, 0.2)}
 
 

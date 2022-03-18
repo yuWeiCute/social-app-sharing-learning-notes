@@ -6,7 +6,7 @@ const Posts = ({ searchTerm, setSearchTerm }) => {
 
   return (
     <div className="px-2 md:px-7">
-      <div className="bg-gray-50">
+      <div className="md:m-3 bg-gray-50">
         <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
       <div className="md:m-3 h-full">

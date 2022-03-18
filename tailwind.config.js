@@ -43,6 +43,7 @@ module.exports = {
         primary: '#FAFAFA',
         secColor: '#313bac',
         navColor: '#BEBEBE',
+        darkGray: '#494949',
       },
       backgroundColor: {
         mainColor: '#FBF8F9',

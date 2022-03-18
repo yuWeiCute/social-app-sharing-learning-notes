@@ -18,7 +18,6 @@ const Post = ({ pin }) => {
   const [savingPost, setSavingPost] = useState(false);
   const [beSaved, setBeSaved] = useState(false);
 
-
   const navigate = useNavigate();
 
   const { postedBy, image, _id, projectLink, codeLink, title, description } = pin;
@@ -42,12 +41,10 @@ const Post = ({ pin }) => {
   const savePost = (id) => {
 
     if (alreadySaved?.length === 0 && user) {
-      console.log(inThrottle);
       if (!inThrottle) {
         inThrottle = true;
         //每秒最多发送一次请求
         setTimeout(() => (inThrottle = false), 1000)
-        console.log('save');
         setSavingPost(true);
 
         client
@@ -82,24 +79,25 @@ const Post = ({ pin }) => {
 
 
   return (
-    <div className="m-2">
+    <div className="m-3 mb-8">
       <div
         onMouseEnter={() => setPostHovesecondaryColor(true)}
         onMouseLeave={() => setPostHovesecondaryColor(false)}
-        onClick={() => navigate(`/work/post-detail/${_id}`)}
+        onClick={() => navigate(`/post-detail/${_id}`)}
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
-        {image && (
-          <img className="rounded-lg w-full " src={(urlFor(image).width(250).url())} alt="user-post" />)}
+        {/* {image && ( */}
+          <img className="min-h-40 rounded-lg w-full " src={(urlFor(image).width(380).url())} alt="" />
+          {/* )} */}
         {postHovesecondaryColor && (
           <div
-            className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50"
+            className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50 bg-black bg-opacity-20 "
             style={{ height: '100%' }}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex flex-row-reverse items-center justify-between">
 
-              {/* view and git按钮 */}
-              <div className="flex gap-2">
+              {/* 下载 */}
+              {/*               <div className="flex gap-2">
                 <a
                   href={pin.download}
                   download
@@ -109,7 +107,7 @@ const Post = ({ pin }) => {
                   className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
                 ><MdDownloadForOffline />
                 </a>
-              </div>
+              </div> */}
 
               {/* save按钮按钮 */}
               {(alreadySaved?.length !== 0) || (beSaved === true) ? (
@@ -129,12 +127,8 @@ const Post = ({ pin }) => {
                 </button>
               )}
 
-            </div>
-
-            {/* git  and view*/}
-            <div className=" flex  items-center gap-2 w-full">
-
-              <a
+              {/* view*/}
+              {projectLink?.slice(8).length > 0 ? <a
                 target="_blank"
                 rel="noreferrer"
                 href={projectLink}
@@ -145,8 +139,14 @@ const Post = ({ pin }) => {
                 el="noreferrer"
               >
                 <AiFillEye />
-              </a>
+              </a> : undefined}
 
+            </div>
+
+
+            <div className=" flex  items-center gap-2 w-full">
+
+              {/* git*/}
               {codeLink?.slice(8).length > 0 ? (
                 <a
                   href={codeLink}
@@ -185,8 +185,8 @@ const Post = ({ pin }) => {
 
       {/* 单元的详细 */}
       <Link to={`/user-profile/${postedBy?._id}`} className=" gap-2 mt-2 ">
-        <p className="font-semibold capitalize">{title}</p>
-        <p className="capitalize">{description}</p>
+        <p className="mt-2 text-xl font-bold capitalize">{title}</p>
+        <p className="text-lg text-darkGray capitalize">{description}</p>
       </Link>
     </div>
   );

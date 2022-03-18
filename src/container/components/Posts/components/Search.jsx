@@ -12,7 +12,6 @@ const Search = ({ searchTerm }) => {
   useEffect(() => {
     if (searchTerm !== '') {
       setLoading(true);
-      console.log(searchTerm);
       const query = searchQuery(searchTerm);
       client.fetch(query).then((data) => {
         setPosts(data);

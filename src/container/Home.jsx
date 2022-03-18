@@ -53,11 +53,13 @@ const Home = () => {
       <Suspense fallback={<Fragment />}> 
         <Routes>
           <Route path="" element={<Myhome />} />
+          <Route path="post-detail/:pinId" element={<PostDetail user={user && user} />} />
+          <Route path="create-post" element={<CreatePost user={user && user} />} />
           <Route path="/work" element={<Posts searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} >
             <Route path="" element={<Feed />} />
             <Route path="category/:categoryId" element={<Feed />} />
-            <Route path="post-detail/:pinId" element={<PostDetail user={user && user} />} />
-            <Route path="create-post" element={<CreatePost user={user && user} />} />
+            
+            
             <Route path="search" element={<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} />
           </Route>
         </Routes>

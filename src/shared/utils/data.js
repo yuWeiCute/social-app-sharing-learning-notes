@@ -8,7 +8,7 @@ export const userQuery = (userId) => {
 
 export const categories = [
   {
-    name: 'UI/UX',
+    name: 'UI&UX',
     image: 'https://i.pinimg.com/750x/eb/47/44/eb4744eaa3b3ccd89749fa3470e2b0de.jpg',
   },
   {
@@ -37,24 +37,19 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
       description,
       projectLink,
       codeLink,
-      categories[],
       postedBy->{
-        _id,
-        userName,
-        image
+        _id
       },
       save[]{
         _key,
         postedBy->{
           _id,
-          userName,
-          image
         },
       },
     } `;
 
 export const searchQuery = (searchTerm) => {
-  const query = `*[_type == "pin" && title match '${searchTerm}*' || categories[] match '${searchTerm}*' || about match '${searchTerm}*']{
+  const query = `*[_type == "pin" && pt::text(body) match '${searchTerm}*' || title match '${searchTerm}*' || categories[] match '${searchTerm}*']{
     image{
       asset->{
         url
@@ -65,18 +60,13 @@ export const searchQuery = (searchTerm) => {
         description,
         projectLink,
         codeLink,
-        categories[],
         postedBy->{
-          _id,
-          userName,
-          image
+          _id
         },
         save[]{
           _key,
           postedBy->{
             _id,
-            userName,
-            image
           },
         },
       } `;
@@ -96,19 +86,13 @@ export const pinDetailQuery = (pinId) => {
     description,
     projectLink,
     codeLink,
+    categories[],
     publishedAt,
     body,
     postedBy->{
       _id,
       userName,
       image
-    },
-   save[]{
-      postedBy->{
-        _id,
-        userName,
-        image
-      },
     },
     comments[]{
       comment,
@@ -125,53 +109,52 @@ export const pinDetailQuery = (pinId) => {
 };
 
 export const pinDetailMorePostQuery = (pin) => {
-  const query = `*[_type == "pin" && category == '${pin.category}' && _id != '${pin._id}' ]{
+  const query = `*[_type == "pin" && categories[] match '${pin.categories}' && _id != '${pin._id}' ]{
     image{
       asset->{
         url
       }
     },
-    _id,
-    destination,
-    postedBy->{
-      _id,
-      userName,
-      image
-    },
-    save[]{
-      _key,
-      postedBy->{
         _id,
-        userName,
-        image
-      },
-    },
-  }`;
+        title,
+        description,
+        projectLink,
+        codeLink,
+        postedBy->{
+          _id
+        },
+        save[]{
+          _key,
+          postedBy->{
+            _id,
+          },
+        },
+      } `;
   return query;
 };
 
 export const userCreatedPostsQuery = (userId) => {
-  const query = `*[ _type == 'pin' && userId == '${userId}'] | order(_createdAt desc){
+  const query = `*[ _type == 'pin' && userId == '${userId}' ] | order(_createdAt desc){
     image{
       asset->{
         url
       }
     },
-    _id,
-    destination,
-    postedBy->{
-      _id,
-      userName,
-      image
-    },
-    save[]{
-      postedBy->{
         _id,
-        userName,
-        image
-      },
-    },
-  }`;
+        title,
+        description,
+        projectLink,
+        codeLink,
+        postedBy->{
+          _id
+        },
+        save[]{
+          _key,
+          postedBy->{
+            _id,
+          },
+        },
+      } `;
   return query;
 };
 
@@ -182,21 +165,21 @@ export const userSavedPostsQuery = (userId) => {
         url
       }
     },
-    _id,
-    destination,
-    postedBy->{
-      _id,
-      userName,
-      image
-    },
-    save[]{
-      postedBy->{
         _id,
-        userName,
-        image
-      },
-    },
-  }`;
+        title,
+        description,
+        projectLink,
+        codeLink,
+        postedBy->{
+          _id
+        },
+        save[]{
+          _key,
+          postedBy->{
+            _id,
+          },
+        },
+      } `;
   return query;
 };
 

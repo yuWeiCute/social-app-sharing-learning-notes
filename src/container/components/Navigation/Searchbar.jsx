@@ -22,7 +22,10 @@ const Searchbar = ({ searchTerm, setSearchTerm }) => {
         <div className="flex gap-3 ">
 
 
-          <Link to="/work/create-post" className="bg-black text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center">
+          <Link to="/create-post" 
+           className="rounded-lg w-10 h-10 flex justify-center items-center shadow text-white bg-secondaryColor hover:bg-transparent transition-all duration-500 hover:text-secColor font-bold"
+          // className="bg-black text-white rounded-lg w-12 h-12 md:w-14 md:h-12 flex justify-center items-center"
+          >
             <IoMdAdd />
           </Link>
         </div>

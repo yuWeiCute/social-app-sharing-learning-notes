@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
-
+import { DraftEditor } from './';
 import { categories } from '../../../shared/utils/data';
 import { client } from '../../../client';
 import Spinner from '../../../shared/components/Spinner';
 
 const CreatePost = ({ user }) => {
   const [title, setTitle] = useState('');
-  const [about, setAbout] = useState('');
+  const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
-  const [destination, setDestination] = useState();
+  const [projectLink, setProjectLink] = useState();
+  const [codeLink, setCodeLink] = useState();
   const [fields, setFields] = useState();
   const [category, setCategory] = useState();
   const [imageAsset, setImageAsset] = useState();
@@ -41,13 +42,17 @@ const CreatePost = ({ user }) => {
     }
   };
 
+  let publishedAt = new Date()
+
   const savePost = () => {
-    if (title && about && destination && imageAsset?._id && category) {
+    if (title && description && publishedAt && projectLink && codeLink && imageAsset?._id && category) {
       const doc = {
         _type: 'pin',
         title,
-        about,
-        destination,
+        description,
+        publishedAt,
+        projectLink,
+        codeLink,
         image: {
           _type: 'image',
           asset: {
@@ -60,7 +65,7 @@ const CreatePost = ({ user }) => {
           _type: 'postedBy',
           _ref: user._id,
         },
-        category,
+        categories: [category],
       };
       client.create(doc).then(() => {
         navigate('/');
@@ -78,7 +83,7 @@ const CreatePost = ({ user }) => {
   };
   return (
     <div className="flex flex-col justify-center items-center mt-5 lg:h-4/5">
-      
+
       <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
         <div className="bg-lightGrayColor p-3 flex flex-0.7 w-full">
           <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
@@ -151,16 +156,23 @@ const CreatePost = ({ user }) => {
           )}
           <input
             type="text"
-            value={about}
-            onChange={(e) => setAbout(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             placeholder="Tell everyone what your Post is about"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
           <input
             type="url"
-            vlaue={destination}
-            onChange={(e) => setDestination(e.target.value)}
-            placeholder="Add a destination link"
+            value={projectLink}
+            onChange={(e) => setProjectLink(e.target.value)}
+            placeholder="Add a project link"
+            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+          />
+          <input
+            type="url"
+            value={codeLink}
+            onChange={(e) => setCodeLink(e.target.value)}
+            placeholder="Add a code link"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
 
@@ -181,11 +193,12 @@ const CreatePost = ({ user }) => {
                 ))}
               </select>
             </div>
+            <DraftEditor className="m-5"/>
             <div className="flex justify-end items-end mt-5">
               <button
                 type="button"
                 onClick={savePost}
-                className="bg-secondaryColor text-white font-bold p-2 rounded-full w-28 outline-none"
+                className="rounded-lg py-2 px-6 shadow text-white bg-secondaryColor hover:bg-transparent transition-all duration-500 hover:text-secColor font-bold"
               >
                 Save Post
               </button>

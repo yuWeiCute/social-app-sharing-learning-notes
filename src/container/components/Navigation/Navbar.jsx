@@ -16,7 +16,7 @@ const Navbar = ({ user }) => {
 
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-row z-10">
 
             {/* 导航栏 */}
             <div className=" p-2 w-full flex flex-row justify-between items-center shadow-md">
@@ -32,11 +32,10 @@ const Navbar = ({ user }) => {
                 {/* md时候的菜单 */}
                 <ul className="md:flex flex-row items-center ">
 
-
                     {['home', 'work'].map((item) => (
                         <NavLink
                             to={`/${item == 'home' ? '' : item}`}
-                            className={"hidden md:flex flex-row px-2 text-base font-medium text-gray-500 hover:text-secColor"
+                            className={"hidden md:flex flex-row px-2 text-lg font-medium text-gray-500 hover:text-secColor"
                                 // ({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)
                             }
                             // onClick={handleCloseSidebar}
@@ -67,14 +66,14 @@ const Navbar = ({ user }) => {
             </div>
 
             {/* 悬浮固定图标 */}
-            <HiMenu fontSize={40} className="hidden md:block absolute cursor-pointer left-0 top-1/2"
-            // onClick={() => setToggleSidebar(true)
+            <HiMenu fontSize={30} className="hidden md:block absolute cursor-pointer left-0 top-1/2"
+            onClick={() => setToggleSidebar(true)}
             />
 
 
             {/* 侧边栏的显示 */}
             {toggleSidebar && (
-                <div className="fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
+                <div className="fixed w-4/5 md:w-2/5 xl:w-1/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in">
                     <div className="absolute w-full flex justify-end items-center p-2">
                         <AiFillCloseCircle fontSize={30} className="cursor-pointer" onClick={() => setToggleSidebar(false)} />
                     </div>
