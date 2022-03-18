@@ -89,6 +89,7 @@ export const pinDetailQuery = (pinId) => {
     categories[],
     publishedAt,
     body,
+    richtext,
     postedBy->{
       _id,
       userName,

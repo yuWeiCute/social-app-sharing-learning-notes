@@ -16,6 +16,8 @@ import Spinner from '../../../shared/components/Spinner';
 // import BlockContent from "@sanity/block-content-to-react"
 // import PortableText from '@sanity/block-content-to-react'
 
+//add rich date from html-react-parser
+import parse from 'html-react-parser';
 
 const PostDetail = ({ user }) => {
   const { pinId } = useParams();
@@ -24,7 +26,8 @@ const PostDetail = ({ user }) => {
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
 
-
+  const parse = require('html-react-parser');
+  //rich date save
 
   const fetchPostDetails = () => {
     const query = pinDetailQuery(pinId);
@@ -40,7 +43,7 @@ const PostDetail = ({ user }) => {
       });
     }
   };
-  
+
   //https://www.npmjs.com/package/@sanity/client?source=post_page---------------------------
   //api参考网站 
   const deleteComment = (key) => {
@@ -155,9 +158,16 @@ const PostDetail = ({ user }) => {
               </div>
 
               {/* blog body */}
-              <div className="block__content leading-relaxed">
+              {pinDetail?.body && <div className="block__content leading-relaxed">
                 <BlogBody pinDetail={pinDetail} />
               </div>
+              }
+
+              {pinDetail?.richtext &&
+                <div className="block__content leading-relaxed">
+                  {parse(pinDetail?.richtext)}
+                </div>
+              }
 
               {/* 上传者 */}
               <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">

@@ -17,6 +17,7 @@ const CreatePost = ({ user }) => {
   const [category, setCategory] = useState();
   const [imageAsset, setImageAsset] = useState();
   const [wrongImageType, setWrongImageType] = useState(false);
+  const [richtext, setRichtext] = useState("")
 
   const navigate = useNavigate();
 
@@ -45,7 +46,7 @@ const CreatePost = ({ user }) => {
   let publishedAt = new Date()
 
   const savePost = () => {
-    if (title && description && publishedAt && projectLink && codeLink && imageAsset?._id && category) {
+    if (title && description && publishedAt && projectLink && codeLink && imageAsset?._id && category && richtext) {
       const doc = {
         _type: 'pin',
         title,
@@ -53,6 +54,7 @@ const CreatePost = ({ user }) => {
         publishedAt,
         projectLink,
         codeLink,
+        richtext,
         image: {
           _type: 'image',
           asset: {
@@ -64,6 +66,7 @@ const CreatePost = ({ user }) => {
         postedBy: {
           _type: 'postedBy',
           _ref: user._id,
+
         },
         categories: [category],
       };
@@ -82,9 +85,9 @@ const CreatePost = ({ user }) => {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center mt-5 lg:h-4/5">
+    <div className="flex flex-col justify-center items-center m-auto mt-5 lg:w-4/5 bg-white">
 
-      <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 lg:w-4/5  w-full">
+      <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 w-full">
         <div className="bg-lightGrayColor p-3 flex flex-0.7 w-full">
           <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
             {loading && (
@@ -136,7 +139,7 @@ const CreatePost = ({ user }) => {
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col gap-6 lg:pl-5 mt-5 w-full">
+        <div className="flex flex-1 flex-col gap-6 lg:pl-5 mt-3 w-full">
           <input
             type="text"
             value={title}
@@ -145,7 +148,7 @@ const CreatePost = ({ user }) => {
             className="outline-none text-2xl sm:text-3xl font-bold border-b-2 border-gray-200 p-2"
           />
           {user && (
-            <div className="flex gap-2 mt-2 mb-2 items-center bg-white rounded-lg ">
+            <div className="flex gap-2 items-center bg-white rounded-lg ">
               <img
                 src={user.image}
                 className="w-10 h-10 rounded-full"
@@ -193,22 +196,24 @@ const CreatePost = ({ user }) => {
                 ))}
               </select>
             </div>
-            <DraftEditor className="m-5"/>
-            <div className="flex justify-end items-end mt-5">
-              <button
-                type="button"
-                onClick={savePost}
-                className="rounded-lg py-2 px-6 shadow text-white bg-secondaryColor hover:bg-transparent transition-all duration-500 hover:text-secColor font-bold"
-              >
-                Save Post
-              </button>
-            </div>
           </div>
         </div>
       </div>
-      {fields && (
-        <p className="text-red-500 mb-5 text-xl transition-all duration-150 ease-in ">Please add all fields.</p>
-      )}
+      <DraftEditor
+        richtext={richtext} setRichtext={setRichtext} />
+      <div className="flex flex-row justify-between items-center w-full pl-3 pr-3 pb-3 lg:pl-5 lg:pr-5 lg:pb-5">
+        {fields ? (
+          <p className="text-red-500 text-xl transition-all duration-150 ease-in ">Please add all fields.</p>
+        ):<p/>}
+        <button
+          type="button"
+          onClick={savePost}
+          className="rounded-lg py-2 px-6 shadow text-white bg-secondaryColor hover:bg-transparent transition-all duration-500 hover:text-secColor font-bold"
+        >
+          Save Post
+        </button>
+      </div>
+
     </div>
   );
 };

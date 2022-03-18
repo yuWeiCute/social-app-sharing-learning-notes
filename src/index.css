@@ -1,4 +1,26 @@
+/* 恢复文字设置 */
 @tailwind base;
+h1{
+  @apply mt-4 mb-2 font-semibold text-3xl lg:text-4xl;
+}
+h2{
+  @apply mt-4 mb-2 font-semibold text-2xl lg:text-3xl;
+}
+h3{
+  @apply mt-4 mb-2 font-semibold text-xl lg:text-2xl
+}
+h4{
+  @apply font-semibold text-lg lg:text-xl 
+}
+h5{
+  @apply font-semibold text-base lg:text-lg 
+}
+h6{
+  @apply font-semibold text-sm lg:text-base 
+}
+a{
+  @apply cursor-pointer transition-all duration-300 hover:text-secColor
+}
 @tailwind components;
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
