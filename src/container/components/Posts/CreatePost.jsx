@@ -46,7 +46,7 @@ const CreatePost = ({ user }) => {
   let publishedAt = new Date()
 
   const savePost = () => {
-    if (title && description && publishedAt && projectLink && codeLink && imageAsset?._id && category && richtext) {
+    if (title && description && publishedAt && imageAsset?._id && category && richtext) {
       const doc = {
         _type: 'pin',
         title,
@@ -168,14 +168,14 @@ const CreatePost = ({ user }) => {
             type="url"
             value={projectLink}
             onChange={(e) => setProjectLink(e.target.value)}
-            placeholder="Add a project link"
+            placeholder="Add a project link (optional)"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
           <input
             type="url"
             value={codeLink}
             onChange={(e) => setCodeLink(e.target.value)}
-            placeholder="Add a code link"
+            placeholder="Add a code link (optional)"
             className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
           />
 
@@ -203,7 +203,7 @@ const CreatePost = ({ user }) => {
         richtext={richtext} setRichtext={setRichtext} />
       <div className="flex flex-row justify-between items-center w-full pl-3 pr-3 pb-3 lg:pl-5 lg:pr-5 lg:pb-5">
         {fields ? (
-          <p className="text-red-500 text-xl transition-all duration-150 ease-in ">Please add all fields.</p>
+          <p className="text-red-500 text-xl transition-all duration-150 ease-in ">Please fill in all required fields.</p>
         ):<p/>}
         <button
           type="button"

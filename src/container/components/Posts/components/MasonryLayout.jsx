@@ -1,30 +1,85 @@
-import React from "react"
+import React, { FC, useCallback, useState, useReducer, useRef, useEffect } from "react"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+// import Masonry from 'masonry-layout'  //实现瀑布流
 import Post from './Post';
-import LazyLoad from 'react-lazyload';
+
+const MasonryLayout = ({ pins }) => {
+
+  const clientRef = useRef(null);
+  const scrollRef = useRef(null);
+
+  const curPageSize = 10   //一页多少项 需大于一面可以展示的项数
+
+  const initState = {
+    curPage: 2,
+    noData: false,
+    listData: pins.slice(0,curPageSize),
+  }
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case 'APPEND':
+        return {
+          listData: [...state.listData, ...action.payload.listData],
+        };
+      default:
+        return { ...state, ...action.payload };
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, initState);
+
+  const getPageData = (page, pageSize) => {
+    if (page > 5) return [];
+    const arr = [];
+    for (let i = 0; i < pageSize; i++) {
+      let number = i + (page - 1) * pageSize
+      if (number >= pins.length) break
+      arr.push(pins[number]
+      );
+    }
+    return arr;
+  };
+
+  /**
+   * @method handleScroll
+   * @description: 滚动事件监听
+   */
+  const handleScroll = () => {
+    const { clientHeight: wrapperHeight } = scrollRef.current;   // 内容详细
+    const { scrollTop, clientHeight } = clientRef.current;  //页面信息
+    // 当临界元素进入可视范围时,加载下一页数据
+    console.log('handleScroll');
+    if (!state.noData && wrapperHeight - scrollTop <= clientHeight) {
+      console.log(state.curPage);
+      const newData = getPageData(state.curPage, curPageSize);
+      dispatch({
+        type: 'APPEND',
+        payload: { listData: newData },
+      });
+      dispatch({
+        payload: {
+          curPage: state.curPage + 1,
+          noData: !(newData.length > 0),
+        },
+      });
+    }
+  }
 
 
-const MasonryLayout = ({ pins }) => (
-  <ResponsiveMasonry
-    columnsCountBreakPoints={{ 350: 1, 780: 2, 1080: 3, 1980: 4 }}
-  >
-    <Masonry className=" animate-slide-fwd"
-    // imagesLoadedOptions={breakpointColumnsObj}
-    >
-      {pins?.map((pin) =>
-/*         <LazyLoad
-          // scrollContainer={document.getElementById('root')}
-          // scroll={true}
-          // debounce={300}
-          // offset={100}
-          // height={200}
-          // placeholder={<img width="100%" height="100%" src={'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F016d795b61c8c6a801215c8f918e83.gif&refer=http%3A%2F%2Fimg.zcool.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1648967541&t=6a0f18e0bb4a73d9282dc3622c718839'} alt="loading" />}
-          key={pin._id}
-        > */
-          <Post key={pin._id} pin={pin} />
-      )}
-    </Masonry>
-  </ResponsiveMasonry>
-);
+  return (
+    <div
+      className="pb-2 flex-1 w-full h-screen overflow-y-scroll" 
+      ref={clientRef} onScroll={handleScroll}>
+      <ul ref={scrollRef} >
+        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 780: 2, 1080: 3, 1980: 4 }}>
+          <Masonry className=" animate-slide-fwd">
+            {state.listData?.map((pin) => <Post key={pin._id} pin={pin} className="w-max" />)}
+          </Masonry>
+        </ResponsiveMasonry>
+      </ul>
+    </div >
+  );
+}
 
 export default MasonryLayout;

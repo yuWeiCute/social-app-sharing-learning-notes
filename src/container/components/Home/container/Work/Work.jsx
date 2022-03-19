@@ -22,16 +22,16 @@ const Work = () => {
   }, []);
 
   const handleWorkFilter = (item) => {
+    console.log(item);
     setActiveFilter(item);
+    console.log(works);
     setAnimateCard([{ y: 100, opacity: 0 }]);
-
     setTimeout(() => {
       setAnimateCard([{ y: 0, opacity: 1 }]);
-
       if (item === 'All') {
         setFilterWork(works);
       } else {
-        setFilterWork(works.filter((works) => works.categories.includes(item)));
+        setFilterWork(works.filter((work) => work.categories.includes(item)));
       }
     }, 500);
   };
@@ -64,7 +64,7 @@ const Work = () => {
         transition={{ duration: 0.5, delayChildren: 0.5 }}
         className="app__work-portfolio"
       >
-        {filterWork.map((work, index) => (
+        {filterWork.slice(0,10).map((work, index) => (
           <div className="app__work-item app__flex" key={index}
           onClick={() => navigate(`/post-detail/${work._id}`)}>
               <div

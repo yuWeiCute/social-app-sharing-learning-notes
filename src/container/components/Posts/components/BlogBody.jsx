@@ -3,7 +3,7 @@ import { sanityConfig, urlFor } from '../../../../client';
 import { PortableText } from '@portabletext/react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 
-import theme from 'react-syntax-highlighter/dist/esm/styles/prism/vs';
+import theme from 'react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus';
 import { getImage, getImageDimensions } from '@sanity/asset-utils';
 
 const myPortableTextComponents = {
@@ -41,7 +41,6 @@ const myPortableTextComponents = {
       <SyntaxHighlighter
         style={theme}
         language={value.code.language}
-        className="bodyCode"
       >
         {String(value.code.code).replace(/\n$/, '')}
       </SyntaxHighlighter>
@@ -61,10 +60,10 @@ const myPortableTextComponents = {
 const BlogBody = ({ pinDetail }) => {
   const blog = pinDetail.body;
   return (
-      <PortableText 
-        value={blog}
-        components={myPortableTextComponents}
-      />
+    <PortableText
+      value={blog}
+      components={myPortableTextComponents}
+    />
   )
 }
 

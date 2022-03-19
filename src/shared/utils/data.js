@@ -35,6 +35,7 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
       _id,
       title,
       description,
+      categories[],
       projectLink,
       codeLink,
       postedBy->{

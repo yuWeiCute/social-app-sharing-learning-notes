@@ -10,7 +10,7 @@ import Spinner from '../../../../shared/components/Spinner';
 const Feed = () => {
   const [loading, setLoading] = useState(false);
 
-  const [pins, setPosts] = useState();
+  const [pins, setPosts] = useState([]);
 
   const { categoryId } = useParams();
 

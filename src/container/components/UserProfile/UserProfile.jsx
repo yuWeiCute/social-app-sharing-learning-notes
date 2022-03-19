@@ -7,14 +7,14 @@ import MasonryLayout from '../Posts/components/MasonryLayout';
 import Spinner from '../../../shared/components/Spinner';
 import ReactTooltip from 'react-tooltip';
 import logo from '../../../shared/assets/logowhite.webp';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const activeBtnStyles = 'bg-secondaryColor text-white font-bold p-2 rounded-full w-20 outline-none';
 const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
 
 const UserProfile = () => {
   const [user, setUser] = useState();
-  const [pins, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
   const [text, setText] = useState('Created');
   const [activeBtn, setActiveBtn] = useState('created');
 
@@ -34,12 +34,15 @@ const UserProfile = () => {
 
       client.fetch(createdPostsQuery).then((data) => {
         setPosts(data);
+        console.log(posts);
       });
     } else {
+      console.log('sava');
       const savedPostsQuery = userSavedPostsQuery(userId);
 
       client.fetch(savedPostsQuery).then((data) => {
         setPosts(data);
+        console.log(posts);
       });
     }
   }, [text, userId]);
@@ -52,14 +55,12 @@ const UserProfile = () => {
   if (!user) return <Spinner message="Loading profile" />;
 
   return (
-    <div className="relative pb-2 h-full justify-center items-center bg-white">
+    <div className="relative pb-2 justify-center items-center bg-white">
       <div className="flex flex-col pb-5">
         <div className="relative flex flex-col mb-7">
           <div className="flex flex-col justify-center items-center">
-            <img
-              className=" w-full h-370 2xl:h-510 shadow-lg object-cover"
-              src="https://source.unsplash.com/1600x900/?nature,photography,technology"
-              alt=""
+            <div
+              className=" w-full h-20 shadow-lg bg-mainColor"
             />
             <img
               className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover bg-white"
@@ -80,15 +81,15 @@ const UserProfile = () => {
               className=" bg-white p-2 rounded-full cursor-pointer outline-none shadow-md"
               onClick={onLogout}
             ><p data-tip="Logout" >
-              <AiOutlineLogout color="red" fontSize={21} />
+                <AiOutlineLogout color="red" fontSize={21} />
+              </p>
               <ReactTooltip />
-            </p>
             </button>
           </div>
           <div className=" absolute top-0 z-1 left-0 p-2.5">
-          <Link to="/">
-                    <img src={logo} alt="logo" className="cursor-pointer w-36" />
-                </Link>
+            <Link to="/">
+              <img src={logo} alt="logo" className="cursor-pointer w-36" />
+            </Link>
           </div>
 
 
@@ -118,10 +119,10 @@ const UserProfile = () => {
         </div>
 
         <div className="px-2">
-          <MasonryLayout pins={pins} />
+          {posts?.length !== 0 && <MasonryLayout pins={posts} />}
         </div>
 
-        {pins?.length === 0 && (
+        {posts?.length === 0 && (
           <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
             No Posts Found!
           </div>

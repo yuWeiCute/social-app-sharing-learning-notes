@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MdDownloadForOffline } from 'react-icons/md';
-import { AiTwotoneDelete, AiFillEye, AiFillGithub, AiOutlineCalendar, AiOutlineProfile } from 'react-icons/ai';
+import { AiTwotoneDelete, AiFillEye,  AiOutlineCalendar, AiOutlineProfile } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,10 +11,6 @@ import { MasonryLayout, BlogBody } from './';
 import { pinDetailMorePostQuery, pinDetailQuery } from '../../../shared/utils/data';
 import Spinner from '../../../shared/components/Spinner';
 
-// import { alert } from '../../../shared/utils/alert';
-// import BlockContent from "@sanity/block-content-to-react"
-// import PortableText from '@sanity/block-content-to-react'
-
 //add rich date from html-react-parser
 import parse from 'html-react-parser';
 
@@ -25,9 +20,6 @@ const PostDetail = ({ user }) => {
   const [pinDetail, setPostDetail] = useState();
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
-
-  const parse = require('html-react-parser');
-  //rich date save
 
   const fetchPostDetails = () => {
     const query = pinDetailQuery(pinId);
@@ -171,7 +163,12 @@ const PostDetail = ({ user }) => {
 
               {/* 上传者 */}
               <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
-                <img src={pinDetail?.postedBy.image} className="w-10 h-10 rounded-full" alt="user-profile" />
+              <img src={pinDetail?.postedBy.image}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
+                      }}
+                      alt="" className="w-10 h-10 rounded-full cursor-pointer" />
                 <p className="font-bold">{pinDetail?.postedBy.userName}</p>
               </Link>
 
@@ -180,11 +177,12 @@ const PostDetail = ({ user }) => {
               <div className="max-h-370 overflow-y-auto">
                 {pinDetail?.comments?.map((item) => (
                   <div className="flex gap-2 mt-5 items-center bg-white rounded-lg" key={item.comment}>
-                    <img
-                      src={item.postedBy?.image}
-                      className="w-10 h-10 rounded-full cursor-pointer"
-                      alt="user-profile"
-                    />
+                    <img src={item.postedBy?.image}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
+                      }}
+                      alt="" className="w-10 h-10 rounded-full cursor-pointer" />
                     <div className="flex flex-col">
                       <p className="font-bold">{item.postedBy?.userName}</p>
                       <p>{item.comment}</p>
@@ -209,7 +207,12 @@ const PostDetail = ({ user }) => {
               {/* comment */}
               <div className="flex flex-wrap mt-6 gap-3">
                 {user && <Link to={`/user-profile/${user._id}`}>
-                  <img src={user.image} className="w-10 h-10 rounded-full cursor-pointer" alt="user-profile" />
+                  <img src={user?.image}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
+                    }}
+                    alt="" className="w-10 h-10 rounded-full cursor-pointer" />
                 </Link>}
                 <input
                   className=" flex-1 border-gray-100 outline-none border-2 p-2 rounded-2xl focus:border-gray-300"

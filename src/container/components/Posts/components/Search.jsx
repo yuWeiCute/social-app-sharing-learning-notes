@@ -6,7 +6,7 @@ import { feedQuery, searchQuery } from '../../../../shared/utils/data';
 import Spinner from '../../../../shared/components/Spinner';
 
 const Search = ({ searchTerm }) => {
-  const [pins, setPosts] = useState();
+  const [pins, setPins] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,15 +14,16 @@ const Search = ({ searchTerm }) => {
       setLoading(true);
       const query = searchQuery(searchTerm);
       client.fetch(query).then((data) => {
-        setPosts(data);
+        setPins(data);
         setLoading(false);
       });
     } else {
       client.fetch(feedQuery).then((data) => {
-        setPosts(data);
+        setPins(data);
         setLoading(false);
       });
     }
+    console.log(pins);
   }, [searchTerm]);
 
   return (
@@ -30,7 +31,7 @@ const Search = ({ searchTerm }) => {
       {loading && <Spinner message="Searching pins" />}
       {pins?.length !== 0 && <MasonryLayout pins={pins} />}
       {pins?.length === 0 && searchTerm !== '' && !loading && (
-        <div className="mt-10 text-center text-xl ">No Posts Found!</div>
+        <div className="mt-10 text-center text-xl ">No Pins Found!</div>
       )}
     </div>
   );
