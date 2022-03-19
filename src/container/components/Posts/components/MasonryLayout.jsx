@@ -8,19 +8,19 @@ const MasonryLayout = ({ pins }) => {
   const clientRef = useRef(null);
   const scrollRef = useRef(null);
 
-  const curPageSize = 10   //一页多少项 需大于一面可以展示的项数
+  const curPageSize = 10 < pins.length ? 10 : pins.length   //一页多少项 需大于一面可以展示的项数
 
   const initState = {
     curPage: 2,
     noData: false,
-    listData: pins.slice(0,curPageSize),
+    listDataNum: curPageSize,
   }
 
   function reducer(state, action) {
     switch (action.type) {
       case 'APPEND':
         return {
-          listData: [...state.listData, ...action.payload.listData],
+          listData: action.payload.listData,
         };
       default:
         return { ...state, ...action.payload };
@@ -30,15 +30,9 @@ const MasonryLayout = ({ pins }) => {
   const [state, dispatch] = useReducer(reducer, initState);
 
   const getPageData = (page, pageSize) => {
-    if (page > 5) return [];
-    const arr = [];
-    for (let i = 0; i < pageSize; i++) {
-      let number = i + (page - 1) * pageSize
-      if (number >= pins.length) break
-      arr.push(pins[number]
-      );
-    }
-    return arr;
+    let number = page * pageSize
+    number = number >= pins.length ? state.listDataNum : number
+    return number;
   };
 
   /**
@@ -54,27 +48,28 @@ const MasonryLayout = ({ pins }) => {
       console.log(state.curPage);
       const newData = getPageData(state.curPage, curPageSize);
       dispatch({
-        type: 'APPEND',
-        payload: { listData: newData },
-      });
-      dispatch({
         payload: {
           curPage: state.curPage + 1,
-          noData: !(newData.length > 0),
+          noData: newData == state.listDataNum,
         },
       });
+      dispatch({
+        type: 'APPEND',
+        payload: { listDataNum: newData },
+      });
+
     }
   }
 
 
   return (
     <div
-      className="pb-2 flex-1 w-full h-screen overflow-y-scroll" 
+      className="pb-2 flex-1 w-full h-screen overflow-y-scroll"
       ref={clientRef} onScroll={handleScroll}>
       <ul ref={scrollRef} >
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 780: 2, 1080: 3, 1980: 4 }}>
           <Masonry className=" animate-slide-fwd">
-            {state.listData?.map((pin) => <Post key={pin._id} pin={pin} className="w-max" />)}
+            {pins?.slice(0, state.listDataNum).map((pin) => <Post key={pin._id} pin={pin} className="w-max" />)}
           </Masonry>
         </ResponsiveMasonry>
       </ul>

@@ -4,28 +4,41 @@ import MasonryLayout from './MasonryLayout';
 import { client } from '../../../../client';
 import { feedQuery, searchQuery } from '../../../../shared/utils/data';
 import Spinner from '../../../../shared/components/Spinner';
+import { cleanup } from '@testing-library/react';
 
 const Search = ({ searchTerm }) => {
   const [pins, setPins] = useState([]);
   const [loading, setLoading] = useState(false);
 
+
+  const fetchData = async (postsQuery) => {
+    try {
+      const data = await client.fetch(postsQuery);
+      if (data) {
+        setPins(data);
+        setLoading(false);
+      }
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
+
   useEffect(() => {
     if (searchTerm !== '') {
-      setLoading(true);
-      const query = searchQuery(searchTerm);
-      client.fetch(query).then((data) => {
-        setPins(data);
-        setLoading(false);
-      });
-    } else {
-      client.fetch(feedQuery).then((data) => {
-        setPins(data);
-        setLoading(false);
-      });
-    }
-    console.log(pins);
+        setLoading(true);
+        const query = searchQuery(searchTerm.toLowerCase());
+        fetchData(query)
+      } else {
+        fetchData(feedQuery)
+    };
+    return function cleanup() {
+
+    };
   }, [searchTerm]);
 
+
+  
   return (
     <div>
       {loading && <Spinner message="Searching pins" />}

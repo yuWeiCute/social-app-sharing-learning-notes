@@ -59,6 +59,7 @@ export const searchQuery = (searchTerm) => {
         _id,
         title,
         description,
+        categories[],
         projectLink,
         codeLink,
         postedBy->{

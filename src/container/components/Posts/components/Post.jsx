@@ -14,7 +14,7 @@ import { client, urlFor } from '../../../../client';
 
 const Post = ({ pin }) => {
 
-  const [postHovesecondaryColor, setPostHovesecondaryColor] = useState(false);
+  const [postHovesecondaryColor, setPostHovered] = useState(false);
   const [savingPost, setSavingPost] = useState(false);
   const [beSaved, setBeSaved] = useState(false);
 
@@ -81,34 +81,19 @@ const Post = ({ pin }) => {
   return (
     <div className="m-3 mb-8 ">
       <div
-        onMouseEnter={() => setPostHovesecondaryColor(true)}
-        onMouseLeave={() => setPostHovesecondaryColor(false)}
+        onMouseEnter={() => setPostHovered(true)}
+        onMouseLeave={() => setPostHovered(false)}
         onClick={() => navigate(`/post-detail/${_id}`)}
         className=" relative cursor-zoom-in w-auto hover:shadow-lg rounded-lg overflow-hidden transition-all duration-500 ease-in-out"
       >
-        {/* {image && ( */}
-          <img style={{ minHeight: '10rem'}}
-          className="rounded-lg w-full " src={(urlFor(image).width(480).url())} alt="" />
-          {/* )} */}
+        {image && (
+          <img style={{minHeight:'10rem'}} className="rounded-lg w-full" src={(urlFor(image).width(400).url())} alt="user-post" />)}
         {postHovesecondaryColor && (
           <div
             className="absolute top-0 w-full h-full flex flex-col justify-between p-1 pr-2 pt-2 pb-2 z-50 bg-black bg-opacity-20 "
             style={{ height: '100%' }}
           >
             <div className="flex flex-row-reverse items-center justify-between">
-
-              {/* 下载 */}
-              {/*               <div className="flex gap-2">
-                <a
-                  href={pin.download}
-                  download
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  className="bg-white w-9 h-9 p-2 rounded-full flex items-center justify-center text-dark text-xl opacity-75 hover:opacity-100 hover:shadow-md outline-none"
-                ><MdDownloadForOffline />
-                </a>
-              </div> */}
 
               {/* save按钮按钮 */}
               {(alreadySaved?.length !== 0) || (beSaved === true) ? (
