@@ -1,8 +1,5 @@
 import gsap from "gsap";
 
-
-
-
 function lerp(start, end, amount) {
   return (1 - amount) * start + amount * end
 }
@@ -72,6 +69,7 @@ window.addEventListener('touchmove', function (e) {
     endY = e.touches[0].clientY || e.targetTouches[0].clientY;
   }
 }, false);
+
 window.addEventListener('touchend', mouseup, false);
 window.addEventListener('mouseup', mouseup, false);
 

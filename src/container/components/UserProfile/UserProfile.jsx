@@ -8,9 +8,10 @@ import Spinner from '../../../shared/components/Spinner';
 import ReactTooltip from 'react-tooltip';
 import logo from '../../../shared/assets/logowhite.webp';
 import { Link } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion'
 
-const activeBtnStyles = 'bg-secondaryColor text-white font-bold p-2 rounded-full w-20 outline-none';
-const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
+const activeBtnStyles = 'bg-secondaryColor text-white font-bold p-2 rounded-full w-20 outline-none hover:text-primary';
+const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none hover:text-secColor';
 
 const UserProfile = () => {
   const [user, setUser] = useState();
@@ -34,15 +35,12 @@ const UserProfile = () => {
 
       client.fetch(createdPostsQuery).then((data) => {
         setPosts(data);
-        console.log(posts);
       });
     } else {
-      console.log('sava');
       const savedPostsQuery = userSavedPostsQuery(userId);
 
       client.fetch(savedPostsQuery).then((data) => {
         setPosts(data);
-        console.log(posts);
       });
     }
   }, [text, userId]);
@@ -55,15 +53,21 @@ const UserProfile = () => {
   if (!user) return <Spinner message="Loading profile" />;
 
   return (
-    <div className="relative pb-2 justify-center items-center bg-white">
-      <div className="flex flex-col pb-5">
+    <motion.div
+      whileInView={{ y: [20, 10, 0], opacity: [0, 0, 1] }}
+      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0 }}
+      className="bg-white"
+    >
+
+      <div >
         <div className="relative flex flex-col mb-7">
           <div className="flex flex-col justify-center items-center">
             <div
-              className=" w-full h-20 shadow-lg bg-mainColor"
+              className=" w-full h-20 shadow-lg bg-secondaryColor opacity-75"
             />
             <img
-              className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover bg-white"
+              className="rounded-full w-20 h-20 -mt-10 shadow-xl object-cover bg-white z-20"
               src={user.image}
               onError={(e) => {
                 e.target.onerror = null;
@@ -92,17 +96,16 @@ const UserProfile = () => {
             </Link>
           </div>
 
-
-
         </div>
-        <div className="text-center mb-7">
+
+        <div className="text-center  mb-4">
           <button
             type="button"
             onClick={(e) => {
               setText(e.target.textContent);
               setActiveBtn('created');
             }}
-            className={`${activeBtn === 'created' ? activeBtnStyles : notActiveBtnStyles}`}
+            className={`${activeBtn === 'created' ? activeBtnStyles : notActiveBtnStyles}` }
           >
             Created
           </button>
@@ -112,15 +115,26 @@ const UserProfile = () => {
               setText(e.target.textContent);
               setActiveBtn('saved');
             }}
-            className={`${activeBtn === 'saved' ? activeBtnStyles : notActiveBtnStyles}`}
+            className={`${activeBtn === 'saved' ? activeBtnStyles : notActiveBtnStyles} 
+            cursor-pointer transition-all duration-300 `}
           >
             Saved
           </button>
         </div>
 
-        <div className="px-2">
-          {posts?.length !== 0 && <MasonryLayout pins={posts} />}
-        </div>
+        <AnimatePresence className="px-2">
+          {posts?.length !== 0 &&
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="block m-auto" style={{ maxWidth: '1640px' }}
+            >
+              <MasonryLayout pins={posts} />
+            </motion.div>
+          }
+        </AnimatePresence>
 
         {posts?.length === 0 && (
           <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
@@ -129,7 +143,7 @@ const UserProfile = () => {
         )}
       </div>
 
-    </div>
+    </motion.div>
   );
 };
 

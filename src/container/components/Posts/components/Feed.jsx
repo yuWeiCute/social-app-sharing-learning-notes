@@ -44,7 +44,7 @@ const Feed = () => {
   return (
     <div>
       {pins && (
-        <MasonryLayout pins={pins} />
+        <MasonryLayout pins={pins} className="px-5"/>
       )}
     </div>
   );

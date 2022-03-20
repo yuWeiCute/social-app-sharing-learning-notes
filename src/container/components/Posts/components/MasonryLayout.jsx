@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useState, useReducer, useRef, useEffect } from "react"
+import React, { useReducer, useRef } from "react"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
-// import Masonry from 'masonry-layout'  //实现瀑布流
 import Post from './Post';
+
 
 const MasonryLayout = ({ pins }) => {
 
@@ -43,14 +43,12 @@ const MasonryLayout = ({ pins }) => {
     const { clientHeight: wrapperHeight } = scrollRef.current;   // 内容详细
     const { scrollTop, clientHeight } = clientRef.current;  //页面信息
     // 当临界元素进入可视范围时,加载下一页数据
-    console.log('handleScroll');
     if (!state.noData && wrapperHeight - scrollTop <= clientHeight) {
-      console.log(state.curPage);
       const newData = getPageData(state.curPage, curPageSize);
       dispatch({
         payload: {
           curPage: state.curPage + 1,
-          noData: newData == state.listDataNum,
+          noData: newData === state.listDataNum,
         },
       });
       dispatch({
@@ -64,12 +62,13 @@ const MasonryLayout = ({ pins }) => {
 
   return (
     <div
-      className="pb-2 flex-1 w-full h-screen overflow-y-scroll"
+      className="pb-60 flex-1 w-full h-screen overflow-y-scroll"
       ref={clientRef} onScroll={handleScroll}>
       <ul ref={scrollRef} >
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 780: 2, 1080: 3, 1980: 4 }}>
           <Masonry className=" animate-slide-fwd">
-            {pins?.slice(0, state.listDataNum).map((pin) => <Post key={pin._id} pin={pin} className="w-max" />)}
+            
+            {pins?.slice(0, state.listDataNum).map((pin) => <Post key={pin._id} pin={pin} className=" flex-col justify-center"/>)}
           </Masonry>
         </ResponsiveMasonry>
       </ul>

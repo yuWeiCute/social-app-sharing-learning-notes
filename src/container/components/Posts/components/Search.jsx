@@ -4,7 +4,6 @@ import MasonryLayout from './MasonryLayout';
 import { client } from '../../../../client';
 import { feedQuery, searchQuery } from '../../../../shared/utils/data';
 import Spinner from '../../../../shared/components/Spinner';
-import { cleanup } from '@testing-library/react';
 
 const Search = ({ searchTerm }) => {
   const [pins, setPins] = useState([]);
@@ -18,7 +17,7 @@ const Search = ({ searchTerm }) => {
         setPins(data);
         setLoading(false);
       }
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -26,11 +25,11 @@ const Search = ({ searchTerm }) => {
 
   useEffect(() => {
     if (searchTerm !== '') {
-        setLoading(true);
-        const query = searchQuery(searchTerm.toLowerCase());
-        fetchData(query)
-      } else {
-        fetchData(feedQuery)
+      setLoading(true);
+      const query = searchQuery(searchTerm.toLowerCase());
+      fetchData(query)
+    } else {
+      fetchData(feedQuery)
     };
     return function cleanup() {
 
@@ -38,7 +37,6 @@ const Search = ({ searchTerm }) => {
   }, [searchTerm]);
 
 
-  
   return (
     <div>
       {loading && <Spinner message="Searching pins" />}

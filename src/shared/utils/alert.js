@@ -1,8 +1,8 @@
 window.alert = function (msg) {
-	if(this.alertOnOff==true){
+	if (this.alertOnOff === true) {
 		return
 	}
-	
+
 	this.alertOnOff = true
 	var maskBg = '#0000002b';						//蒙版展示色
 	var zIndex = 990;							//修改弹出层z-index,应为最顶层,避免被覆盖

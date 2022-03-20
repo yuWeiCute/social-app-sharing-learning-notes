@@ -6,6 +6,8 @@ import { DraftEditor } from './';
 import { categories } from '../../../shared/utils/data';
 import { client } from '../../../client';
 import Spinner from '../../../shared/components/Spinner';
+import { motion } from 'framer-motion';
+
 
 const CreatePost = ({ user }) => {
   const [title, setTitle] = useState('');
@@ -85,136 +87,142 @@ const CreatePost = ({ user }) => {
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center m-auto mt-5 lg:w-4/5 bg-white">
+    <motion.div
+      whileInView={{ y: [20, 10, 0], opacity: [0, 0, 1] }}
+      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0 }}
+    >
+      <div className="flex flex-col justify-center items-center m-auto mt-5 lg:w-4/5 bg-white">
 
-      <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 w-full">
-        <div className="bg-lightGrayColor p-3 flex flex-0.7 w-full">
-          <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
-            {loading && (
-              <Spinner />
-            )}
-            {
-              wrongImageType && (
-                <p>It&apos;s wrong file type.</p>
-              )
-            }
-            {!imageAsset ? (
-              // eslint-disable-next-line jsx-a11y/label-has-associated-control
-              <label>
-                <div className="flex flex-col items-center justify-center h-full">
-                  <div className="flex flex-col justify-center items-center">
-                    <p className="font-bold text-2xl">
-                      <AiOutlineCloudUpload />
+        <div className=" flex lg:flex-row flex-col justify-center items-center bg-white lg:p-5 p-3 w-full">
+          <div className="bg-lightGrayColor p-3 flex flex-0.7 w-full">
+            <div className=" flex justify-center items-center flex-col border-2 border-dotted border-gray-300 p-3 w-full h-420">
+              {loading && (
+                <Spinner />
+              )}
+              {
+                wrongImageType && (
+                  <p>It&apos;s wrong file type.</p>
+                )
+              }
+              {!imageAsset ? (
+                // eslint-disable-next-line jsx-a11y/label-has-associated-control
+                <label>
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <div className="flex flex-col justify-center items-center">
+                      <p className="font-bold text-2xl">
+                        <AiOutlineCloudUpload />
+                      </p>
+                      <p className="text-lg">Click to upload</p>
+                    </div>
+
+                    <p className="mt-32 text-gray-400">
+                      Recommendation: Use high-quality JPG, JPEG, SVG, PNG, GIF or TIFF less than 20MB
                     </p>
-                    <p className="text-lg">Click to upload</p>
                   </div>
-
-                  <p className="mt-32 text-gray-400">
-                    Recommendation: Use high-quality JPG, JPEG, SVG, PNG, GIF or TIFF less than 20MB
-                  </p>
+                  <input
+                    type="file"
+                    name="upload-image"
+                    onChange={uploadImage}
+                    className="w-0 h-0"
+                  />
+                </label>
+              ) : (
+                <div className="relative h-full">
+                  <img
+                    src={imageAsset?.url}
+                    alt="uploaded-pic"
+                    className="h-full w-full"
+                  />
+                  <button
+                    type="button"
+                    className="absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out"
+                    onClick={() => setImageAsset(null)}
+                  >
+                    <MdDelete />
+                  </button>
                 </div>
-                <input
-                  type="file"
-                  name="upload-image"
-                  onChange={uploadImage}
-                  className="w-0 h-0"
-                />
-              </label>
-            ) : (
-              <div className="relative h-full">
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-1 flex-col gap-6 lg:pl-5 mt-3 w-full">
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Add your title"
+              className="outline-none text-2xl sm:text-3xl font-bold border-b-2 border-gray-200 p-2"
+            />
+            {user && (
+              <div className="flex gap-2 items-center bg-white rounded-lg ">
                 <img
-                  src={imageAsset?.url}
-                  alt="uploaded-pic"
-                  className="h-full w-full"
+                  src={user.image}
+                  className="w-10 h-10 rounded-full"
+                  alt="user-profile"
                 />
-                <button
-                  type="button"
-                  className="absolute bottom-3 right-3 p-3 rounded-full bg-white text-xl cursor-pointer outline-none hover:shadow-md transition-all duration-500 ease-in-out"
-                  onClick={() => setImageAsset(null)}
-                >
-                  <MdDelete />
-                </button>
+                <p className="font-bold">{user.userName}</p>
               </div>
             )}
-          </div>
-        </div>
+            <input
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Tell everyone what your Post is about"
+              className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+            />
+            <input
+              type="url"
+              value={projectLink}
+              onChange={(e) => setProjectLink(e.target.value)}
+              placeholder="Add a project link (optional)"
+              className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+            />
+            <input
+              type="url"
+              value={codeLink}
+              onChange={(e) => setCodeLink(e.target.value)}
+              placeholder="Add a code link (optional)"
+              className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
+            />
 
-        <div className="flex flex-1 flex-col gap-6 lg:pl-5 mt-3 w-full">
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Add your title"
-            className="outline-none text-2xl sm:text-3xl font-bold border-b-2 border-gray-200 p-2"
-          />
-          {user && (
-            <div className="flex gap-2 items-center bg-white rounded-lg ">
-              <img
-                src={user.image}
-                className="w-10 h-10 rounded-full"
-                alt="user-profile"
-              />
-              <p className="font-bold">{user.userName}</p>
-            </div>
-          )}
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Tell everyone what your Post is about"
-            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
-          />
-          <input
-            type="url"
-            value={projectLink}
-            onChange={(e) => setProjectLink(e.target.value)}
-            placeholder="Add a project link (optional)"
-            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
-          />
-          <input
-            type="url"
-            value={codeLink}
-            onChange={(e) => setCodeLink(e.target.value)}
-            placeholder="Add a code link (optional)"
-            className="outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2"
-          />
-
-          <div className="flex flex-col">
-            <div>
-              <p className="mb-2 font-semibold text:lg sm:text-xl">Choose Post Category</p>
-              <select
-                onChange={(e) => {
-                  setCategory(e.target.value);
-                }}
-                className="outline-none w-4/5 text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
-              >
-                <option value="others" className="sm:text-bg bg-white">Select Category</option>
-                {categories.map((item) => (
-                  <option className="text-base border-0 outline-none capitalize bg-white text-black " value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
+            <div className="flex flex-col">
+              <div>
+                <p className="mb-2 font-semibold text:lg sm:text-xl">Choose Post Category</p>
+                <select
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                  }}
+                  className="outline-none w-4/5 text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer"
+                >
+                  <option value="others" className="sm:text-bg bg-white">Select Category</option>
+                  {categories.map((item) => (
+                    <option className="text-base border-0 outline-none capitalize bg-white text-black " value={item.name}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <DraftEditor
-        richtext={richtext} setRichtext={setRichtext} />
-      <div className="flex flex-row justify-between items-center w-full pl-3 pr-3 pb-3 lg:pl-5 lg:pr-5 lg:pb-5">
-        {fields ? (
-          <p className="text-red-500 text-xl transition-all duration-150 ease-in ">Please fill in all required fields.</p>
-        ):<p/>}
-        <button
-          type="button"
-          onClick={savePost}
-          className="rounded-lg py-2 px-6 shadow text-white bg-secondaryColor hover:bg-transparent transition-all duration-500 hover:text-secColor font-bold"
-        >
-          Save Post
-        </button>
-      </div>
+        <DraftEditor
+          richtext={richtext} setRichtext={setRichtext} />
+        <div className="flex flex-row justify-between items-center w-full pl-3 pr-3 pb-3 lg:pl-5 lg:pr-5 lg:pb-5">
+          {fields ? (
+            <p className="text-red-500 text-xl transition-all duration-150 ease-in ">Please fill in all required fields.</p>
+          ) : <p />}
+          <button
+            type="button"
+            onClick={savePost}
+            className="rounded-lg py-2 px-6 shadow text-white bg-secondaryColor hover:bg-transparent transition-all duration-500 hover:text-secColor font-bold"
+          >
+            Save Post
+          </button>
+        </div>
 
-    </div>
+      </div>
+    </motion.div>
   );
 };
 

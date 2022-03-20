@@ -4,7 +4,7 @@ import { Navbar } from './components/Navigation';
 import { Search, Feed, PostDetail, CreatePost, } from './components/Posts';
 import { userQuery } from '../shared/utils/data';
 import { client } from '../client';
-
+import  './home.scss';
 
  const Posts = lazy(() => import("./components/Posts/Posts"));
  const Myhome = lazy(() => import("./components/Home/Myhome"));
@@ -58,14 +58,14 @@ const Home = () => {
           <Route path="/work" element={<Posts searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} >
             <Route path="" element={<Feed />} />
             <Route path="category/:categoryId" element={<Feed />} />
-            
-            
             <Route path="search" element={<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} />
           </Route>
         </Routes>
         </Suspense>
       </div>
-
+      <div className="copyright">
+          <p className="p-text font-semibold">@2022 YUWEI for Demo.</p>
+        </div>
     </div>
   )
 }

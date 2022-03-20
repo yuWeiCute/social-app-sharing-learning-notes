@@ -12,23 +12,21 @@ export default function App({ richtext, setRichtext }) {
   );
 
   useEffect(() => {
-
-    console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     setRichtext(draftToHtml(convertToRaw(editorState.getCurrentContent())))
-  }, [editorState]);
+  }, [editorState, setRichtext]);
 
   return (
     <div className=" w-full bg-white pl-3 pr-3 pb-3 lg:pl-5 lg:pr-5 lg:pb-5" >
-  
+
       <div className="border border-gray-300 p-2"
-          style={{ minHeight: '280px' }}>
-         <Editor 
+        style={{ minHeight: '280px' }}>
+        <Editor
           placeholder={'Write what you would say.'}
           editorState={editorState}
           onEditorStateChange={setEditorState}
         />
       </div>
-       
+
     </div>
   );
 }

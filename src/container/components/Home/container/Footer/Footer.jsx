@@ -18,21 +18,25 @@ const Footer = () => {
   };
 
   const handleSubmit = () => {
-    setLoading(true);
+    if (formData.username && formData.email && formData.message) {
+      setLoading(true);
 
-    const contact = {
-      _type: 'contact',
-      name: formData.username,
-      email: formData.email,
-      message: formData.message,
-    };
+      const contact = {
+        _type: 'contact',
+        name: formData.username,
+        email: formData.email,
+        message: formData.message,
+      };
 
-    client.create(contact)
-      .then(() => {
-        setLoading(false);
-        setIsFormSubmitted(true);
-      })
-      .catch((err) => console.log(err));
+      client.create(contact)
+        .then(() => {
+          setLoading(false);
+          setIsFormSubmitted(true);
+        })
+        .catch((err) => console.log(err));
+    }else{
+    alert('Please fill in all items')
+  }
   };
 
   return (

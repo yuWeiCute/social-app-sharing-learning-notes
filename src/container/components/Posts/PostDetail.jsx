@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { AiTwotoneDelete, AiFillEye,  AiOutlineCalendar, AiOutlineProfile } from 'react-icons/ai';
+import { AiTwotoneDelete, AiFillEye, AiOutlineCalendar, AiOutlineProfile } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-
+import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 
 import { client, urlFor } from '../../../client';
@@ -87,7 +87,11 @@ const PostDetail = ({ user }) => {
   }
 
   return (
-    <>
+    <motion.div
+      whileInView={{ y: [20, 10, 0], opacity: [0, 0, 1] }}
+      transition={{ duration: 0.5 }}
+      initial={{ opacity: 0 }}
+    >
       {pinDetail && (
         <div className="xl:mt-5 flex lg:text-lg flex-col m-auto bg-white p-5 xl:p-10" style={{ maxWidth: '1380px', borderRadius: '32px' }}>
           <div>
@@ -149,6 +153,8 @@ const PostDetail = ({ user }) => {
                 <p className="flex items-center  mt-1"><AiOutlineProfile className="mr-2" /> {pinDetail.description}</p>
               </div>
 
+              <hr className='mt-2 mb-2'/>
+
               {/* blog body */}
               {pinDetail?.body && <div className="block__content leading-relaxed">
                 <BlogBody pinDetail={pinDetail} />
@@ -163,12 +169,12 @@ const PostDetail = ({ user }) => {
 
               {/* 上传者 */}
               <Link to={`/user-profile/${pinDetail?.postedBy._id}`} className="flex gap-2 mt-5 items-center bg-white rounded-lg ">
-              <img src={pinDetail?.postedBy.image}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
-                      }}
-                      alt="" className="w-10 h-10 rounded-full cursor-pointer" />
+                <img src={pinDetail?.postedBy.image}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
+                  }}
+                  alt="" className="w-10 h-10 rounded-full cursor-pointer" />
                 <p className="font-bold">{pinDetail?.postedBy.userName}</p>
               </Link>
 
@@ -261,7 +267,7 @@ const PostDetail = ({ user }) => {
       ) : (
         <Spinner message="Loading more pins" />
       )}
-    </>
+    </motion.div>
   );
 };
 

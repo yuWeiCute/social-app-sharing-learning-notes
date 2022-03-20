@@ -1,6 +1,6 @@
 import sanityClient from '@sanity/client';
 import imageUrlBuilder from '@sanity/image-url';
-import { configure } from '@testing-library/react';
+// import { configure } from '@testing-library/react';
   //https://www.npmjs.com/package/@sanity/client?source=post_page---------------------------
   //api参考网站
 export const client = sanityClient({
