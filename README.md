@@ -11,7 +11,10 @@
 
 [![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website)
 
+### View for web
 [<img src="/.github/gifs/web.webp">](https://yuwei.netlify.app/ "Go to demo website")
+
+### View for phone
 [<img src="/.github/gifs/phone.webp">](https://yuwei.netlify.app/ "Go to demo website")
 
 ### Installing
@@ -35,6 +38,6 @@
 
 Your browser should now open and show the app. Otherwise open http://localhost:3000/ in your browser. Editing files will automatically refresh the page.
 
-###### If you link this project, Please note its orginal linkage, Thanks!
+##### If you link this project, Please note its orginal linkage, Thanks!
 
 
