@@ -3,7 +3,7 @@ import { IoIosArrowDropleft } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { NavLink, Link } from 'react-router-dom';
 import { Sidebar } from './';
-
+import { motion } from 'framer-motion'
 import logo from '../../../shared/assets/logo.webp';
 
 
@@ -77,9 +77,15 @@ const Navbar = ({ user }) => {
             {toggleSidebar && (
 
                 <div className="fixed w-full lg:w-1/2 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in duration-200">
-                    <div className="absolute w-full flex justify-end items-center p-2">
-                        <IoIosArrowDropleft fontSize={30} className="cursor-pointer" onClick={() => setToggleSidebar(false)} />
-                    </div>
+                    <motion.div
+                        whileInView={{ opacity: [0, 0, 1] }}
+                        whileHover={{ x: -10, opacity: 0.5 }}
+                        transition={{ duration: 0.5 }}
+                    >
+                        <div className="absolute w-full flex justify-end items-center p-2">
+                            <IoIosArrowDropleft fontSize={30} className="cursor-pointer" onClick={() => setToggleSidebar(false)} />
+                        </div>
+                    </motion.div>
                     <Sidebar closeToggle={setToggleSidebar} user={user && user} />
                 </div>
             )}
@@ -89,6 +95,3 @@ const Navbar = ({ user }) => {
 }
 
 export default Navbar
-/* connect(
-    (state) => ({ headTitle: state.headTitle })
-)() */

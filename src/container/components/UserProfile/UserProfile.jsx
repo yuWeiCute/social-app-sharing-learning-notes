@@ -53,11 +53,12 @@ const UserProfile = () => {
   if (!user) return <Spinner message="Loading profile" />;
 
   return (
+
     <motion.div
       whileInView={{ y: [20, 10, 0], opacity: [0, 0, 1] }}
       transition={{ duration: 0.5 }}
       initial={{ opacity: 0 }}
-      className="bg-white"
+      className="bg-white h-screen"
     >
 
       <div >

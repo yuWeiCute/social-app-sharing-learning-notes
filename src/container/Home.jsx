@@ -4,13 +4,13 @@ import { Navbar } from './components/Navigation';
 import { Search, Feed, PostDetail, CreatePost, } from './components/Posts';
 import { userQuery } from '../shared/utils/data';
 import { client } from '../client';
-import  './home.scss';
+import './home.scss';
 
- const Posts = lazy(() => import("./components/Posts/Posts"));
- const Myhome = lazy(() => import("./components/Home/Myhome"));
+const Posts = lazy(() => import("./components/Posts/Posts"));
+const Myhome = lazy(() => import("./components/Home/Myhome"));
 
 const Home = () => {
-  
+
   //for search
   // const dispatch = useDispatch
 
@@ -23,9 +23,9 @@ const Home = () => {
 
   const scrollRef = useRef(null);
 
-//   store.subscribe(function() {
-//     document.title = headTitle
-// })
+  //   store.subscribe(function() {
+  //     document.title = headTitle
+  // })
 
   useEffect(() => {
     document.title = 'YUWEI - Inspiration & Notes From All Around Web'
@@ -50,22 +50,22 @@ const Home = () => {
 
       {/* 等于work的时候显示 */}
       <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
-      <Suspense fallback={<Fragment />}> 
-        <Routes>
-          <Route path="" element={<Myhome />} />
-          <Route path="post-detail/:pinId" element={<PostDetail user={user && user} />} />
-          <Route path="create-post" element={<CreatePost user={user && user} />} />
-          <Route path="/work" element={<Posts searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} >
-            <Route path="" element={<Feed />} />
-            <Route path="category/:categoryId" element={<Feed />} />
-            <Route path="search" element={<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<Fragment />}>
+          <Routes>
+            <Route path="" element={<Myhome />} />
+            <Route path="post-detail/:pinId" element={<PostDetail user={user && user} />} />
+            <Route path="create-post" element={<CreatePost user={user && user} />} />
+            <Route path="/work" element={<Posts searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} >
+              <Route path="" element={<Feed />} />
+              <Route path="category/:categoryId" element={<Feed />} />
+              <Route path="search" element={<Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} />
+            </Route>
+          </Routes>
         </Suspense>
       </div>
       <div className="copyright">
-          <p className="p-text font-semibold">@2022 YUWEI for Demo.</p>
-        </div>
+        <p className="p-text font-semibold">@2022 YUWEI for Demo.</p>
+      </div>
     </div>
   )
 }

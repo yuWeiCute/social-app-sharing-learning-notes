@@ -54,7 +54,7 @@ export const feedQuery = `*[_type == "pin"] | order(_createdAt desc) {
     } `;
 
 export const searchQuery = (searchTerm) => {
-  const query = `*[_type == "pin" && pt::text(body) match '${searchTerm}*' || title match '${searchTerm}*' || categories[] match '${searchTerm}*']{
+  const query = `*[_type == "pin" && (pt::text(body) match '${searchTerm}*' || title match '${searchTerm}*' || categories[] match '${searchTerm}*')]{
     image{
       asset->{
         url

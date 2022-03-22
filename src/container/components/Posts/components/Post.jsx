@@ -84,7 +84,7 @@ const Post = ({ pin }) => {
       exit={{ opacity: 0 }}
       className="relative"
     >
-      <div className='z-20 absolute right-7 top-2 flex items-start'>
+      {categories && <div className='z-20 absolute right-7 top-2 flex items-start'>
         <span className='text-xs font-semibold'>
           # &nbsp;
         </span>
@@ -99,7 +99,7 @@ const Post = ({ pin }) => {
         <span className='font-mono text-3xl font-semibold text-gray-700 transform translate-y-1'>
           {`${categories[0].slice(categories[0].length - 1, categories[0].length).toUpperCase()}`}
         </span>
-      </div>
+      </div>}
       <div className="m-3 mt-10 xl:ml-5 2xl:ml-10 xl:mr-5 2xl:mr-10 mb-8 ">
         <motion.div
 

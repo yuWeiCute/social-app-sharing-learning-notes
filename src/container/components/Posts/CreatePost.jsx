@@ -159,7 +159,11 @@ const CreatePost = ({ user }) => {
                 <img
                   src={user.image}
                   className="w-10 h-10 rounded-full"
-                  alt="user-profile"
+                  alt=""
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://maxcdn.icons8.com/Share/icon/p1em/users//gender_neutral_user1600.png"
+                  }}
                 />
                 <p className="font-bold">{user.userName}</p>
               </div>

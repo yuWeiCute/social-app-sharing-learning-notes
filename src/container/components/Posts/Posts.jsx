@@ -6,7 +6,7 @@ import './post.scss'
 const Posts = ({ searchTerm, setSearchTerm }) => {
 
   return (
-    <div className="px-2 md:px-7 bgImage h-full overflow-hidden" style={{backgroundImage:"url(" + require("../Home/assets/bgWhite.webp") + ")"}}>
+    <div className="px-2 md:px-7 bgImage h-full overflow-hidden" style={{backgroundImage:"url(" + require("../Home/assets/bgWhite.png") + ")"}}>
       <div className="md:m-3 z-99">
         <Searchbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>

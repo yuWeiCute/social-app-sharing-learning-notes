@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LoginSocialGoogle, LoginSocialGithub } from 'reactjs-social-login'
 import { GoogleLoginButton, GithubLoginButton } from 'react-social-login-buttons'
 import { useNavigate } from 'react-router-dom';
-import shareVideo from '../../shared/assets/share.mp4';
+import shareVideo from '../../shared/assets/share.webm';
 import logo from '../../shared/assets/logowhite.webp';
 import { client } from '../../client';
 import { motion } from 'framer-motion';
@@ -60,8 +60,8 @@ const Login = () => {
       <div className="flex justify-start items-center flex-col h-screen">
         {/* 提示框 */}
 
-        {verification&& 
-        <div className="fixed z-50  top-2 rounded-2xl"><Spinner  message=" " /></div> }
+        {verification &&
+          <div className="fixed z-50  top-2 rounded-2xl"><Spinner message=" " /></div>}
 
         <div className=" relative w-full h-full">
           {/* 背景 */}
