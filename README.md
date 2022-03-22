@@ -1,5 +1,5 @@
 # React Social App for Shareme
-1. This work decomposing the system into `front end` and [`back end`](https://github.com/yuWeiCute/backend-for-my-website"Go to Backend Code")
+1. This work decomposing the system into `front end` and [`back end`](https://github.com/yuWeiCute/backend-for-my-website)
 
 2. Including **home page**, **blog (browsing, searching, publishing, classified display)**, **user (login, collection, comment and management)** and other functional modules
 
@@ -9,7 +9,7 @@
 
 [**Check out the demo**](https://yuwei.netlify.app/)
 
-[![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website"Go to Backend Code")
+[![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website)
 
 [<img src="/.github/gifs/web.webp">](https://yuwei.netlify.app/ "Go to demo website")
 [<img src="/.github/gifs/phone.webp">](https://yuwei.netlify.app/ "Go to demo website")
