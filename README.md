@@ -3,10 +3,12 @@ This work use Reactjs Hooks, file, and folder structure, SCSS, Framer Motion, Ta
 
 [**Check out the demo**](https://yuwei.netlify.app/)
 
-![Node.js CI](https://github.com/dunky11/react-saas-template/workflows/Node.js%20CI/badge.svg)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website)
 
-[<img src="/.github/gifs/showcase.gif">](https://yuwei.netlify.app/ "Go to demo website")
+[<img src="/.github/gifs/微信截图_20220322162408.jpg">](https://yuwei.netlify.app/ "Go to demo website")
+[<img src="/.github/gifs/微信截图_20220322163930.png">](https://yuwei.netlify.app/ "Go to demo website")
+[<img src="/.github/gifs/微信截图_20220322163958.png">](https://yuwei.netlify.app/ "Go to demo website")
+[<img src="/.github/gifs/微信截图_20220322164124.png">](https://yuwei.netlify.app/ "Go to demo website")
 
 ### Installing
 
@@ -29,12 +31,4 @@ This work use Reactjs Hooks, file, and folder structure, SCSS, Framer Motion, Ta
 
 Your browser should now open and show the app. Otherwise open http://localhost:3000/ in your browser. Editing files will automatically refresh the page.
 
-## Deployment
 
-If you are satisfied with the state of your website you can run:
-
-```
-npm run build 
-```
-
-It will create a folder named build with your compiled project inside. After that copy its content into your webroot and you are ready to go.
