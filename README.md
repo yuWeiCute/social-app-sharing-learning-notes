@@ -14,7 +14,7 @@
    [![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website)
 
 # Demo
-[**Check out the demo**](https://yuwei.netlify.app/)（推荐）
+[**Check out the demo**](https://yuwei.netlify.app/)（推荐google登录）
 
 ## Screenshot 项目截图
 ### View for web
