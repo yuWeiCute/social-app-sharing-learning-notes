@@ -1,20 +1,20 @@
 # React Social App for Shareme
-1. This work decomposing the system into `front end` and [`back end`](https://github.com/yuWeiCute/backend-for-my-website)
+1. This work decomposing the system into `front end` and [`back end`](https://github.com/yuWeiCute/backend-for-my-website)  
    这是一个前[后端](https://github.com/yuWeiCute/backend-for-my-website)分离的项目
 
-2. Including **home page**, **blog (browsing, searching, publishing, classified display)**, **user (login, collection, comment and management)** and other functional modules
-   包括**主页**、**博客（浏览、搜索、发布、分类展示）**、**用户（登录、收藏、评论、管理）**等功能模块
+2. Including **home page**, **blog (browsing, searching, publishing, classified display)**, **user (login, collection, comment and management)** and other functional modules   
+   包括**主页**、**博客**、**用户管理**等功能模块
 
-3. Front-end: use `Reactjs Hooks`, file, and folder structure, `SCSS`, `Framer Motion`, `Taiwind` to make Animations. 
-   前端：使用`React`、`Hooks`，并使用`SCSS`、`Framer Motion`、`Taiwind`编写样式。
+3. Front-end: use `Reactjs Hooks`, file, and folder structure, `SCSS`, `Framer Motion`, `Taiwind` to make Animations.    
+   前端：使用React、Hooks，并使用SCSS、Framer Motion、Taiwind编写样式。
 
-4. Back-end: this work use `Sanity` as Backend Sanity to dynamically manage the content of the entire application.
-   后端：使用`Sanity`动态管理整个应用程序的内容。
+4. Back-end: this work use Sanity as Backend Sanity to dynamically manage the content of the entire application.   
+   后端：使用Sanity动态管理整个应用程序的内容。
+
+   [![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website)
 
 # Demo
 [**Check out the demo**](https://yuwei.netlify.app/)（推荐）
-
-[![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website)
 
 ## Screenshot 项目截图
 ### View for web
@@ -25,7 +25,7 @@
 
 ### Installing
 
-## 技术栈
+## Technology Stack 技术栈
  > React
 
  > React-router-dom
@@ -42,7 +42,7 @@
 
  > ...
 
-## 项目结构
+## Project Structure 项目结构
 ```bash
 ├──public
 │  ├──favicon.ico
