@@ -55,7 +55,7 @@ const Sidebar = ({ closeToggle, user }) => {
                     className={" text-xl font-medium text-gray-500 hover:text-secColor"
                       // ({ isActive }) => (isActive ? isActiveStyle : isNotActiveStyle)
                     }
-                    // onClick={handleCloseSidebar}
+                    onClick={handleCloseSidebar}
                     key={item}
                   >
                     {item}&nbsp;/&nbsp;
