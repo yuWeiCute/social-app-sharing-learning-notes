@@ -9,13 +9,13 @@ const Login = lazy(() => import("./container/components/Login"));
 const App = () => {
 
   return (
-    <Suspense fallback={<Fragment />}> 
+    <Suspense fallback={<Fragment />}>
       <Routes>
+        <Route exact path="/*" element={<Home />} />
         <Route path="login" element={<Login />} />
-        <Route path="/*" element={<Home />} />
         <Route path="/user-profile/:userId" element={<UserProfile />} />
       </Routes>
-     </Suspense>
+    </Suspense>
   )
 }
 

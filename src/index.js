@@ -9,7 +9,7 @@ import './shared/utils/cursor.js';
 
 
 ReactDOM.render(
-    <Router>
+    <Router basename="/social-app-sharing-learning-notes">
       <App />
     </Router>,
   document.getElementById('root'),
