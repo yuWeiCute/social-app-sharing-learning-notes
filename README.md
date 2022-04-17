@@ -16,7 +16,7 @@
 # Demo
 [**demo1: https://yuwei.netlify.app/**](https://yuwei.netlify.app/)     
 
-[**demo2: https://yuwei.netlify.app/**](https://yuweicute.github.io/social-app-sharing-learning-notes/)
+[**demo2: https://yuweicute.github.io/social-app-sharing-learning-notes/**](https://yuweicute.github.io/social-app-sharing-learning-notes/)
 
 ## Screenshot 项目截图
 ### View for web
