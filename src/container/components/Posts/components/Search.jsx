@@ -6,6 +6,8 @@ import { feedQuery, searchQuery } from '../../../../shared/utils/data';
 import Spinner from '../../../../shared/components/Spinner';
 
 const Search = ({ searchTerm }) => {
+
+
   const [pins, setPins] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -22,19 +24,41 @@ const Search = ({ searchTerm }) => {
     }
   }
 
-
+  //debounce 延迟显示
   useEffect(() => {
-    if (searchTerm !== '') {
-      setLoading(true);
-      const query = searchQuery(searchTerm.toLowerCase());
-      fetchData(query)
-    } else {
-      fetchData(feedQuery)
-    };
-    return function cleanup() {
+    // if (firstUpdate.current) {
+    //   setInputWithDelay(input)
+    //   firstUpdate.current = false;
+    //   return;
+    // }
+    const handler = window.setTimeout(() => {
+      //将筛选后的列表放入state
+      if (searchTerm !== '') {
+        setLoading(true);
+        const query = searchQuery(searchTerm.toLowerCase());
+        fetchData(query)
+      } else {
+        fetchData(feedQuery)
+      };
+    }, 200)
+    return () => {
+      clearTimeout(handler);
+    }
+  }, [searchTerm])
 
-    };
-  }, [searchTerm]);
+
+  // useEffect(() => {
+  //   if (searchTerm !== '') {
+  //     setLoading(true);
+  //     const query = searchQuery(searchTerm.toLowerCase());
+  //     fetchData(query)
+  //   } else {
+  //     fetchData(feedQuery)
+  //   };
+  //   return function cleanup() {
+
+  //   };
+  // }, [searchTerm]);
 
 
   return (
