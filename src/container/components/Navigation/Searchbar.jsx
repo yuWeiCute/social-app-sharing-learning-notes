@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoMdAdd, IoMdSearch } from 'react-icons/io';
 import ReactTooltip from 'react-tooltip';
@@ -29,7 +29,7 @@ const Searchbar = ({ searchTerm, setSearchTerm }) => {
       setFiltered(newFilteredoptions);
       setInputWithDelay(searchTerm)
       console.log(inputWithDelay);
-    }, debounceDelay)
+    }, 200)
     return () => {
       clearTimeout(handler);
     }
@@ -63,7 +63,6 @@ const Searchbar = ({ searchTerm, setSearchTerm }) => {
     }
     return viewArr
   }
-
 
   //所提示的文字以列表形式呈现
   const renderdemo = () => {

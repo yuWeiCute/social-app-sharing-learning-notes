@@ -31,18 +31,23 @@ const Search = ({ searchTerm }) => {
     //   firstUpdate.current = false;
     //   return;
     // }
+    let isUnmounted = false;
+
     const handler = window.setTimeout(() => {
       //将筛选后的列表放入state
       if (searchTerm !== '') {
         setLoading(true);
-        const query = searchQuery(searchTerm.toLowerCase());
-        fetchData(query)
+        if (!isUnmounted) {
+          const query = searchQuery(searchTerm.toLowerCase());
+          fetchData(query)
+        }
       } else {
         fetchData(feedQuery)
       };
     }, 200)
     return () => {
       clearTimeout(handler);
+      isUnmounted = true;
     }
   }, [searchTerm])
 
