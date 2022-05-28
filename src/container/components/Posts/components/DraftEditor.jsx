@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw } from "draft-js";
+//https://www.npmjs.com/package/draft-js-prism
+import { PrismDecorator } from 'draft-js-prism';
+import { Prism } from 'prismjs'
+
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import draftToHtml from "draftjs-to-html";
@@ -8,8 +12,15 @@ import draftToHtml from "draftjs-to-html";
 
 export default function App({ richtext, setRichtext }) {
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
+    EditorState.createEmpty(new PrismDecorator({
+      // Provide your own instance of PrismJS
+      prism: Prism,
+    }))
   );
+  // var decorator = new PrismDecorator({
+  //   // Provide your own instance of PrismJS
+  //   prism: Prism,
+  // })
 
   useEffect(() => {
     // console.log(convertToRaw(editorState.getCurrentContent()))
@@ -29,15 +40,15 @@ export default function App({ richtext, setRichtext }) {
         <Editor
           placeholder={'Write what you would say.'}
           editorState={editorState}
-          // currentContent 是一个 ContentState 对象，存放的是当前编辑器中的内容，称为内容描述对象
-          // selection 是一个 SelectionState 对象，它是当前选中状态的描述对象
-          // redoStack 和 undoStack 就是撤销/重做栈，它是一个数组，存放的是 ContentState 类型的编辑器状态
-          // onEditorStateChange={setEditorState}
-          // wrapperClassName="包装类"
-          // editorClassName="编辑器类"
-          // toolbarClassName="工具栏类"
-          // wrapperStyle={<wrapperStyleObject>}
-          // editorStyle={<editorStyleObject>}
+        // currentContent 是一个 ContentState 对象，存放的是当前编辑器中的内容，称为内容描述对象
+        // selection 是一个 SelectionState 对象，它是当前选中状态的描述对象
+        // redoStack 和 undoStack 就是撤销/重做栈，它是一个数组，存放的是 ContentState 类型的编辑器状态
+        // onEditorStateChange={setEditorState}
+        // wrapperClassName="包装类"
+        // editorClassName="编辑器类"
+        // toolbarClassName="工具栏类"
+        // wrapperStyle={<wrapperStyleObject>}
+        // editorStyle={<editorStyleObject>}
 
         // 纯 React 意味着函数式，而富文本的渲染适合在本质上被理解为函数。
         // 如果使用 Draft.js，富文本的状态被封装到一个 EditorState 类型的 immutable 对象中，

@@ -20,25 +20,124 @@ const CreatePost = ({ user }) => {
   const [imageAsset, setImageAsset] = useState();
   const [wrongImageType, setWrongImageType] = useState(false);
   const [richtext, setRichtext] = useState("")
-
+  const [why, setWhy] = useState()
   const navigate = useNavigate();
 
+  console.log('Asset', imageAsset);
+
   const uploadImage = (e) => {
-    const selectedFile = e.target.files[0];
+    console.log(e);
+    let selectedFile = e.target.files[0];
+
     // uploading asset to sanity
-    if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg' || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff') {
+    // 允许的格式
+    if (selectedFile.type === 'image/png' || selectedFile.type === 'image/svg' || selectedFile.type === 'image/jpeg'
+      || selectedFile.type === 'image/gif' || selectedFile.type === 'image/tiff' || selectedFile.type === 'image/webp') {
       setWrongImageType(false);
       setLoading(true);
-      //
-      client.assets
-        .upload('image', selectedFile, { contentType: selectedFile.type, filename: selectedFile.name })
-        .then((document) => {
-          setImageAsset(document);
-          setLoading(false);
+
+
+      /**
+       * 针对图片进行压缩,如果图片大小超过压缩阈值,则执行压缩,否则不压缩
+       */
+
+      const transformFile = (selectedFile) => {
+        return new Promise(resolve => {
+          const compressThreshold = 0.1, isPictureCompress = false, pictureQuality = 0.92
+          let fileSize = selectedFile.size / 1024 / 1024;
+
+          console.log('before compress, the file size is : ', fileSize + "M");
+          console.log(selectedFile);
+          setWhy(fileSize)
+          console.log(why);
+          //当开启图片压缩且图片大小大于等于压缩阈值,进行压缩
+          if (fileSize >= compressThreshold) {
+            //声明FileReader文件读取对象
+            const reader = new FileReader();
+            reader.readAsDataURL(selectedFile);
+            reader.onload = () => {
+              // 生成canvas画布
+              const canvas = document.createElement('canvas');
+              // 生成img
+              const img = document.createElement('img');
+              img.src = reader.result;
+              img.onload = () => {
+                const ctx = canvas.getContext('2d');
+                //原始图片宽度、高度
+                let originImageWidth = img.width, originImageHeight = img.height;
+                //默认最大尺度的尺寸限制在（1920 * 1080）
+                console.log('originImageWidth', originImageWidth);
+                let maxWidth = 1840, maxHeight = 1080, ratio = maxWidth / maxHeight;
+                //目标尺寸
+                let targetWidth = originImageWidth, targetHeight = originImageHeight;
+                //当图片的宽度或者高度大于指定的最大宽度或者最大高度时,进行缩放图片
+                if (originImageWidth > maxWidth || originImageHeight > maxHeight) {
+                  //超过最大宽高比例
+                  if ((originImageWidth / originImageHeight) > ratio) {
+                    //宽度取最大宽度值maxWidth,缩放高度
+                    targetWidth = maxWidth;
+                    targetHeight = Math.round(maxWidth * (originImageHeight / originImageWidth));
+                  } else {
+                    //高度取最大高度值maxHeight,缩放宽度
+                    targetHeight = maxHeight;
+                    targetWidth = Math.round(maxHeight * (originImageWidth / originImageHeight));
+                  }
+                }
+                // canvas对图片进行缩放
+                canvas.width = targetWidth;
+                canvas.height = targetHeight;
+                // 清除画布
+                ctx.clearRect(0, 0, targetWidth, targetHeight);
+                // 绘制图片
+                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                // quality值越小,图像越模糊,默认图片质量为0.92
+                const imageDataURL = canvas.toDataURL(selectedFile.type || 'image/jpeg', pictureQuality);
+                // 去掉URL的头,并转换为byte
+                const imageBytes = window.atob(imageDataURL.split(',')[1]);
+                // 处理异常,将ascii码小于0的转换为大于0
+                const arrayBuffer = new ArrayBuffer(imageBytes.length);
+                const uint8Array = new Uint8Array(arrayBuffer);
+                for (let i = 0; i < imageBytes.length; i++) {
+                  uint8Array[i] = imageBytes.charCodeAt(i);
+                }
+                let mimeType = imageDataURL.split(',')[0].match(/:(.*?);/)[1];
+                let newFile = new File([uint8Array], selectedFile.name, { type: mimeType || 'image/jpeg' });
+                console.log('after compress, the selectedFile size is : ', (newFile.size / 1024 / 1024) + "M");
+                resolve(newFile)
+                // selectedFile = newFile;
+                // console.log('after compress, the selectedFile size is2333 : ', (selectedFile.size / 1024 / 1024) + "M");
+                // let fileSize = selectedFile.size / 1024 / 1024;
+                // console.log('fileSize2',fileSize);
+                // setWhy(fileSize)
+                // console.log(why);
+              };
+            };
+          } else {
+            resolve(selectedFile)
+          }
         })
-        .catch((error) => {
-          console.log('Upload failed:', error.message);
-        });
+      }
+
+
+      //
+
+      transformFile(selectedFile).then((selectedFile) => {
+        console.log('beganclient');
+        console.log('the selectedFile size is : ', (selectedFile.size / 1024 / 1024) + "M");
+        client.assets
+          .upload('image', selectedFile, { contentType: selectedFile.type, filename: selectedFile.name })
+          .then((document) => {
+            // console.log(document)
+            setImageAsset(document);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log('Upload failed:', error.message);
+          });
+
+
+      })
+
     } else {
       setLoading(false);
       setWrongImageType(true);
@@ -105,7 +204,9 @@ const CreatePost = ({ user }) => {
                   <p>It&apos;s wrong file type.</p>
                 )
               }
+
               {!imageAsset ? (
+                // 判断图片是否已经有上传
                 // eslint-disable-next-line jsx-a11y/label-has-associated-control
                 <label>
                   <div className="flex flex-col items-center justify-center h-full">
