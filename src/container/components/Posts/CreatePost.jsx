@@ -20,7 +20,6 @@ const CreatePost = ({ user }) => {
   const [imageAsset, setImageAsset] = useState();
   const [wrongImageType, setWrongImageType] = useState(false);
   const [richtext, setRichtext] = useState("")
-  const [why, setWhy] = useState()
   const navigate = useNavigate();
 
   console.log('Asset', imageAsset);
@@ -48,8 +47,7 @@ const CreatePost = ({ user }) => {
 
           console.log('before compress, the file size is : ', fileSize + "M");
           console.log(selectedFile);
-          setWhy(fileSize)
-          console.log(why);
+
           //当开启图片压缩且图片大小大于等于压缩阈值,进行压缩
           if (fileSize >= compressThreshold) {
             //声明FileReader文件读取对象
@@ -92,24 +90,33 @@ const CreatePost = ({ user }) => {
                 ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
                 // quality值越小,图像越模糊,默认图片质量为0.92
                 const imageDataURL = canvas.toDataURL(selectedFile.type || 'image/jpeg', pictureQuality);
+                // Canvas 对象除了提供 toDataURL() 方法之外，它还提供了一个 toBlob() 方法，该方法的语法如下：
+                // canvas.toBlob(callback, mimeType, qualityArgument) 和 toDataURL() 方法相比，toBlob() 方法是异步的，因此多了个 callback 参数
+                console.log('imageDataURL',imageDataURL);   //base64储存信息，
                 // 去掉URL的头,并转换为byte
-                const imageBytes = window.atob(imageDataURL.split(',')[1]);
-                // 处理异常,将ascii码小于0的转换为大于0
+                const imageBytes = window.atob(imageDataURL.split(',')[1]);  //前面是图片信息 “data:image/jpeg;base64,”
+                console.log('imageBytes',imageBytes);    //反正很长很长
+
                 const arrayBuffer = new ArrayBuffer(imageBytes.length);
-                const uint8Array = new Uint8Array(arrayBuffer);
+                console.log('arrayBuffer',arrayBuffer);
+                const uint8Array = new Uint8Array(arrayBuffer);   //都是0的数组，一万个数分一组查看，下一级一百个分一组查看
+                console.log('uint8Array',uint8Array);
                 for (let i = 0; i < imageBytes.length; i++) {
                   uint8Array[i] = imageBytes.charCodeAt(i);
                 }
+                console.log('uint8Array update',uint8Array);   //0-255的数组
                 let mimeType = imageDataURL.split(',')[0].match(/:(.*?);/)[1];
+                // const blob = new Blob([uint8Array], {type: 'image/png'});
+                // const form = new FormData();
+                // form.append('file', blob, '1.png');
+
                 let newFile = new File([uint8Array], selectedFile.name, { type: mimeType || 'image/jpeg' });
                 console.log('after compress, the selectedFile size is : ', (newFile.size / 1024 / 1024) + "M");
                 resolve(newFile)
                 // selectedFile = newFile;
                 // console.log('after compress, the selectedFile size is2333 : ', (selectedFile.size / 1024 / 1024) + "M");
-                // let fileSize = selectedFile.size / 1024 / 1024;
-                // console.log('fileSize2',fileSize);
-                // setWhy(fileSize)
-                // console.log(why);
+
+                // 一次上传多个图片
               };
             };
           } else {
@@ -119,7 +126,7 @@ const CreatePost = ({ user }) => {
       }
 
 
-      //
+      //用promise先处理图片然后再上传到pipe asset
 
       transformFile(selectedFile).then((selectedFile) => {
         console.log('beganclient');
