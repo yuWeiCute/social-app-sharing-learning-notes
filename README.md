@@ -1,15 +1,12 @@
 # React Social App for Shareme
-1. This work decomposing the system into `front end` and [`back end`](https://github.com/yuWeiCute/backend-for-my-website)  
-   这是一个前[后端](https://github.com/yuWeiCute/backend-for-my-website)分离的项目
-
-2. Including **home page**, **blog (browsing, searching, publishing, classified display)**, **user (login, collection, comment and management)** and other functional modules   
+1. Including **home page**, **blog (browsing, searching, publishing, classified display)**, **user (login, collection, comment and management)** and other functional modules   
    包括**主页**、**博客**、**用户管理**等功能模块
 
-3. Front-end: use `Reactjs Hooks`, file, and folder structure, `SCSS`, `Framer Motion`, `Taiwind` to make Animations.    
+2. Front-end: use `Reactjs Hooks`, file, and folder structure, `SCSS`, `Framer Motion`, `Taiwind` to make Animations.    
    前端：使用React、Hooks，并使用SCSS、Framer Motion、Taiwind编写样式。
 
-4. Back-end: this work use Sanity as Backend Sanity to dynamically manage the content of the entire application.   
-   后端：使用Sanity动态管理整个应用程序的内容。
+3. Date-base: this work use Sanity as Backend Sanity to dynamically manage the content of the entire application.   
+   [数据库](https://github.com/yuWeiCute/backend-for-my-website)：使用Sanity动态管理整个应用程序的内容。
 
    [![Back-end Code: with sanity](https://img.shields.io/badge/Backend_Code-Sanity-ff69b4.svg)](https://github.com/yuWeiCute/backend-for-my-website)
 
@@ -20,10 +17,10 @@
 
 ## Screenshot 项目截图
 ### View for web
-[<img src="/.github/gifs/web.webp">](https://yuwei.netlify.app/ "Go to demo website")
+[<img src="https://cdn.sanity.io/images/y4ftypvu/production/d5ec3f42d79e66d23ccaa18941096f83317e06e3-1786x1422.webp">](https://yuwei.netlify.app/ "Go to demo website")
 
 ### View for phone
-[<img src="/.github/gifs/phone.webp">](https://yuwei.netlify.app/ "Go to demo website")
+[<img src="https://cdn.sanity.io/images/y4ftypvu/production/7a418ce3a5b2a4ff6f8f9aafcae19c79be98942c-2072x1924.webp">](https://yuwei.netlify.app/ "Go to demo website")
 
 ### Installing
 
