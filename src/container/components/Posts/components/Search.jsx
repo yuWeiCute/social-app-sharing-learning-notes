@@ -6,8 +6,6 @@ import { feedQuery, searchQuery } from '../../../../shared/utils/data';
 import Spinner from '../../../../shared/components/Spinner';
 
 const Search = ({ searchTerm }) => {
-
-
   const [pins, setPins] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +21,7 @@ const Search = ({ searchTerm }) => {
       console.log(error);
     }
   }
+
 
   //debounce 延迟显示
   useEffect(() => {
@@ -50,20 +49,6 @@ const Search = ({ searchTerm }) => {
       isUnmounted = true;
     }
   }, [searchTerm])
-
-
-  // useEffect(() => {
-  //   if (searchTerm !== '') {
-  //     setLoading(true);
-  //     const query = searchQuery(searchTerm.toLowerCase());
-  //     fetchData(query)
-  //   } else {
-  //     fetchData(feedQuery)
-  //   };
-  //   return function cleanup() {
-
-  //   };
-  // }, [searchTerm]);
 
 
   return (

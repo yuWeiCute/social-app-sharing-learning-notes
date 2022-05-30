@@ -10,9 +10,12 @@ const MasonryLayout = ({ pins }) => {
 
   const curPageSize = 10 < pins.length ? 10 : pins.length   //一页多少项 需大于一面可以展示的项数
 
+  //初始参数，分页加载，其实都是为了endindex，
   const initState = {
+    //下一次加载的页数
     curPage: 2,
     noData: false,
+    //先加载多少数量的item
     listDataNum: curPageSize,
   }
 
@@ -27,10 +30,12 @@ const MasonryLayout = ({ pins }) => {
     }
   }
 
+  //因为这里原理类似于redux所有一不一定要和setstate一样在在最上面定义
   const [state, dispatch] = useReducer(reducer, initState);
 
   const getPageData = (page, pageSize) => {
     let number = page * pageSize
+    //判断新的加载的item'数量
     number = number >= pins.length ? state.listDataNum : number
     return number;
   };
@@ -49,10 +54,13 @@ const MasonryLayout = ({ pins }) => {
       const newData = getPageData(state.curPage, curPageSize);
       dispatch({
         payload: {
+          //当前的页码数加一
           curPage: state.curPage + 1,
+          //判断后面是否有数据
           noData: newData === state.listDataNum,
         },
       });
+      //更新加载的item数量
       dispatch({
         type: 'APPEND',
         payload: { listDataNum: newData },
